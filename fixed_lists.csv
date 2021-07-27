@@ -1,0 +1,96 @@
+Fluorochromes,Parameters,Pops,Host Species,Target Species,Isotype (Heavy Chain),Isotype (Light Chain),units,Default FCS Filenames,Isotype Clones
+7-AAD,APC,NA,Armenian Hamster,cat,IgG1,kappa,ug/test,Specimen_001_A1_A01_002.fcs,27-35
+Ab-E,APC-Cy7,LWB-L,Donkey,chicken,IgG2,lambda,ng/test,Specimen_001_A2_A02_003.fcs,A19-3
+Alexa Fluor 488,B-525,LWB-M,Goat,cow,IgG2a,lambda1,mg/mL,Specimen_001_A3_A03_004.fcs,A23-1
+Alexa Fluor 647,B-575,LWB-G,Guinea Pig,dog,IgG2b,lambda2,,Specimen_001_A4_A04_005.fcs,A95-1
+Alexa Fluor 700,B-610,PBMC-L,Hamster,drosophila ,Ig,Mixed,,Specimen_001_A5_A05_006.fcs,B39-4
+AmCyan,B-695,PBMC-M,Human,guinea pig,IgA,F(ab')2,,Specimen_001_A6_A06_007.fcs,B81-3
+Antibody-Oligo,B-780,Pop,Mouse,hamster,IgE,,,Specimen_001_A7_A07_008.fcs,G155-178
+APC,BV421 / V450,TF-1,Pig,horse,IgG,,,Specimen_001_A8_A08_009.fcs,G55-178
+APC,BV510 / V500,Jurkat,Rabbit,human,IgG2c,,,Specimen_001_A9_A09_010.fcs,Ham IgG2 l1 Ha4/8
+APC-Cy7,FITC,Stim,Rat,mouse,IgG3,,,Specimen_001_A10_A10_011.fcs,MOPC-21
+APC-H7,BB515,Unstim,Sheep,non-human primate,IgM,,,Specimen_001_A11_A11_012.fcs,MOPC-31C
+APC-R700,A488,CHO-B7-H2,Syrian Hamster,pig,Mixed,,,Specimen_001_A12_A12_013.fcs,MPC-11
+BB515,PE,CHO-K1,,rabbit,,,,Specimen_001_B1_B01_014.fcs,NA
+BB630,PE-CF594,CD3+,,rat,,,,Specimen_001_B2_B02_015.fcs,R25-28
+BB660,PE-Cy5,CD3-,,non-biological,,,,Specimen_001_B3_B03_016.fcs,R3-34
+BB700,PE-Cy5.5,REH,,cross-reactive,,,,Specimen_001_B4_B04_017.fcs,R3-35
+BB755,PE-Cy7,HEL,,,,,,Specimen_001_B5_B05_018.fcs,R35-38
+BB790,PerCP-Cy5-5,CD3+ LWB-L,,,,,,Specimen_001_B6_B06_019.fcs,R35-39
+Biotin,R-670,CD3+ B6,,,,,,Specimen_001_B7_B07_020.fcs,R35-95
+BUV395,R-730,CD3- B6,,,,,,Specimen_001_B8_B08_021.fcs,X40
+BUV496,R-780,CD19+ LWB-L,,,,,,Specimen_001_B9_B09_022.fcs,
+BUV563,UV-379,CD4+,,,,,,Specimen_001_B10_B10_023.fcs,
+BUV615,UV-515,CD4-,,,,,,Specimen_001_B11_B11_024.fcs,
+BUV661,UV-560,CD8+,,,,,,Specimen_001_B12_B12_025.fcs,
+BUV737,UV-670,CD8-,,,,,,Specimen_001_C1_C01_026.fcs,
+BUV805,UV-740,Myeloid Cells,,,,,,Specimen_001_C2_C02_027.fcs,
+BV421,UV-820,Lymphoid Cells,,,,,,Specimen_001_C3_C03_028.fcs,
+BV480,V-450,CD45R+,,,,,,Specimen_001_C4_C04_029.fcs,
+BV510,V-525,CD45R-,,,,,,Specimen_001_C5_C05_030.fcs,
+BV570,V-610,NK1.1+,,,,,,Specimen_001_C6_C06_031.fcs,
+BV605,V-670,NK1.1-,,,,,,Specimen_001_C7_C07_032.fcs,
+BV650,V-710,CD335+ total,,,,,,Specimen_001_C8_C08_033.fcs,
+BV711,V-780,CD335+ subset,,,,,,Specimen_001_C9_C09_034.fcs,
+BV750,YG-582,SJL,,,,,,Specimen_001_C10_C10_035.fcs,
+BV786,YG-610,B6 BM high SSC cells,,,,,,Specimen_001_C11_C11_036.fcs,
+BYG-584,YG-670,B6 BM low SSC cells,,,,,,Specimen_001_C12_C12_037.fcs,
+CF-594,YG-710,B6 Spleen,,,,,,Specimen_001_D1_D01_038.fcs,
+FITC,YG-780,CD4+ CD8+,,,,,,Specimen_001_D2_D02_039.fcs,
+NA/LE,Other,CD4- CD8-,,,,,,Specimen_001_D3_D03_040.fcs,
+Other,,CD19+ LWB-L,,,,,,Specimen_001_D4_D04_041.fcs,
+Pacific Blue,,CD25+ Stim,,,,,,Specimen_001_D5_D05_042.fcs,
+PE,,,,,,,,Specimen_001_D6_D06_043.fcs,
+PE-CF594,,,,,,,,Specimen_001_D7_D07_044.fcs,
+PE-Cy5,,,,,,,,Specimen_001_D8_D08_045.fcs,
+PE-Cy5.5,,,,,,,,Specimen_001_D9_D09_046.fcs,
+PE-Cy7,,,,,,,,Specimen_001_D10_D10_047.fcs,
+PerCP,,,,,,,,Specimen_001_D11_D11_048.fcs,
+PerCP Cy5.5,,,,,,,,Specimen_001_D12_D12_049.fcs,
+Purified,,,,,,,,Specimen_001_E1_E01_050.fcs,
+R718,,,,,,,,Specimen_001_E2_E02_051.fcs,
+V500,,,,,,,,Specimen_001_E3_E03_052.fcs,
+V500-C,,,,,,,,Specimen_001_E4_E04_053.fcs,
+,,,,,,,,Specimen_001_E5_E05_054.fcs,
+,,,,,,,,Specimen_001_E6_E06_055.fcs,
+,,,,,,,,Specimen_001_E7_E07_056.fcs,
+,,,,,,,,Specimen_001_E8_E08_057.fcs,
+,,,,,,,,Specimen_001_E9_E09_058.fcs,
+,,,,,,,,Specimen_001_E10_E10_059.fcs,
+,,,,,,,,Specimen_001_E11_E11_060.fcs,
+,,,,,,,,Specimen_001_E12_E12_061.fcs,
+,,,,,,,,Specimen_001_F1_F01_062.fcs,
+,,,,,,,,Specimen_001_F2_F02_063.fcs,
+,,,,,,,,Specimen_001_F3_F03_064.fcs,
+,,,,,,,,Specimen_001_F4_F04_065.fcs,
+,,,,,,,,Specimen_001_F5_F05_066.fcs,
+,,,,,,,,Specimen_001_F6_F06_067.fcs,
+,,,,,,,,Specimen_001_F7_F07_068.fcs,
+,,,,,,,,Specimen_001_F8_F08_069.fcs,
+,,,,,,,,Specimen_001_F9_F09_070.fcs,
+,,,,,,,,Specimen_001_F10_F10_071.fcs,
+,,,,,,,,Specimen_001_F11_F11_072.fcs,
+,,,,,,,,Specimen_001_F12_F12_073.fcs,
+,,,,,,,,Specimen_001_G1_G01_074.fcs,
+,,,,,,,,Specimen_001_G2_G02_075.fcs,
+,,,,,,,,Specimen_001_G3_G03_076.fcs,
+,,,,,,,,Specimen_001_G4_G04_077.fcs,
+,,,,,,,,Specimen_001_G5_G05_078.fcs,
+,,,,,,,,Specimen_001_G6_G06_079.fcs,
+,,,,,,,,Specimen_001_G7_G07_080.fcs,
+,,,,,,,,Specimen_001_G8_G08_081.fcs,
+,,,,,,,,Specimen_001_G9_G09_082.fcs,
+,,,,,,,,Specimen_001_G10_G10_083.fcs,
+,,,,,,,,Specimen_001_G11_G11_084.fcs,
+,,,,,,,,Specimen_001_G12_G12_085.fcs,
+,,,,,,,,Specimen_001_H1_H01_086.fcs,
+,,,,,,,,Specimen_001_H2_H02_087.fcs,
+,,,,,,,,Specimen_001_H3_H03_088.fcs,
+,,,,,,,,Specimen_001_H4_H04_089.fcs,
+,,,,,,,,Specimen_001_H5_H05_090.fcs,
+,,,,,,,,Specimen_001_H6_H06_091.fcs,
+,,,,,,,,Specimen_001_H7_H07_092.fcs,
+,,,,,,,,Specimen_001_H8_H08_093.fcs,
+,,,,,,,,Specimen_001_H9_H09_094.fcs,
+,,,,,,,,Specimen_001_H10_H10_095.fcs,
+,,,,,,,,Specimen_001_H11_H11_096.fcs,

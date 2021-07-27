@@ -1,0 +1,267 @@
+.main-header .logo {
+  font-family: "Georgia", Times, "Times New Roman", serif;
+  font-weight: bold;
+  font-size: 15px;
+}
+.same-row {
+    max-width: 200px;
+    display: table-cell;
+    padding-left: 15px;
+
+}
+.grid {
+    display: grid;
+    grid-template-columns: 150px auto auto auto auto auto auto auto auto auto auto auto auto auto;
+    grid-template-rows: 55px auto auto auto auto;
+    height: 820px;
+}
+.grid > div{
+    overflow-y: hidden;
+    
+
+}
+
+.item-space {
+    grid-column: 1;
+    grid-row: 1;
+}
+.item-row-names {
+    grid-column: 1 /2 ;
+    grid-row: 2 / 5;
+    display: grid;
+}
+.span {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 20px;
+}
+.span-header {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 20px;
+}
+.subitem-row-A {
+    grid-column: 1;
+    grid-row: 1;
+
+    text-align: center;
+    position: relative;
+}
+.subitem-row-B {
+    grid-column: 2;
+    grid-row: 1;
+
+    text-align: center;
+    position: relative;
+}
+.subitem-row-C {
+    grid-column: 3;
+    grid-row: 1;
+
+    text-align: center;
+    position: relative;
+}
+.subitem-row-D {
+    grid-column: 1;
+    grid-row: 4;
+
+    text-align: center;
+    position: relative;
+}
+.subitem-row-E {
+    grid-column: 1;
+    grid-row: 5;
+
+    text-align: center;
+    position: relative;
+}
+.subitem-row-F {
+    grid-column: 1;
+    grid-row: 6;
+
+    text-align: center;
+    position: relative;
+}
+.subitem-row-G {
+    grid-column: 1;
+    grid-row: 7;
+
+    text-align: center;
+    position: relative;
+}
+.subitem-row-H {
+    grid-column: 1;
+    grid-row: 8;
+
+    text-align: center;
+    position: relative;
+}
+.item-data {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: 50px auto auto auto auto;
+    grid-column: 2 / 8;
+    grid-row: 1 / 5;
+    overflow-x: scroll;
+}
+.subitem-header-controlrow {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-targetspecies {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-spec {
+    grid-column: 3;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-host {
+    grid-column: 4;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-isotype {
+    grid-column: 5;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-clone {
+    grid-column: 6;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-fluor {
+    grid-column: 7;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-parameter {
+    grid-column: 8;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-batch {
+    grid-column: 9;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-spec1range {
+    grid-column: 10;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-spec2range {
+    grid-column: 11;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-spec3range {
+    grid-column: 12;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-gatingmethod {
+    grid-column: 13;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+.subitem-header-gatingarg {
+    grid-column: 14;
+    grid-row: 1;
+    text-align: center;
+    position: relative;
+}
+
+
+.subitem-data-controlrow {
+    grid-column: 1;
+    grid-row: 2 / 5;
+}
+.subitem-data-targetspecies {
+    grid-column: 2;
+    grid-row: 2 / 5;
+}
+.subitem-data-spec {
+    grid-column: 3;
+    grid-row: 2 / 5;
+}
+.subitem-data-host {
+    grid-column: 4;
+    grid-row: 2 / 5;
+}
+.subitem-data-isotype {
+    grid-column: 5;
+    grid-row: 2 / 5;
+}
+.subitem-data-clone {
+    grid-column: 6;
+    grid-row: 2 / 5;
+}
+.subitem-data-fluor {
+    grid-column: 7;
+    grid-row: 2 / 5;
+}
+.subitem-data-parameter {
+    grid-column: 8;
+    grid-row: 2 / 5;
+}
+.subitem-data-batch {
+    grid-column: 9;
+    grid-row: 2 / 5;
+}
+.subitem-data-spec1range {
+    grid-column: 10;
+    grid-row: 2 / 5;
+}
+.subitem-data-spec2range {
+    grid-column: 11;
+    grid-row: 2 / 5;
+}
+.subitem-data-spec3range {
+    grid-column: 12;
+    grid-row: 2 / 5;
+}
+.subitem-data-gatingmethod {
+    grid-column: 13;
+    grid-row: 2 / 5;
+}
+.subitem-data-gatingarg {
+    grid-column: 14;
+    grid-row: 2 / 5;
+}
+
+
+
+.subitem {
+    grid-column: 2 / 4;
+    grid-row: 2;
+}
+.subitem2 {
+    grid-column: 2/4;
+    grid-row: 1;
+}

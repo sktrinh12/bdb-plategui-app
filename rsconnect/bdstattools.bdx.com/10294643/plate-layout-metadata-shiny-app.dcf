@@ -1,0 +1,14 @@
+name: plate-layout-metadata-shiny-app
+title:
+username: 10294643
+account: 10294643
+server: bdstattools.bdx.com
+hostUrl: https://bdstattools.bdx.com:3939/__api__
+appId: 94
+bundleId: 883
+url: https://bdstattools.bdx.com:3939/bdb-metadata-file-shiny-app/
+when: 1626108405.69021
+lastSyncTime: 1626108405.69021
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|~$Cell Population Name Options by Sample Type.xlsx|bv421_db_temp.xlsx|bv421_db_test_clean.csv|bv421_db_test_clean.xlsx|testing.csv

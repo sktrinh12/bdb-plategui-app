@@ -1,0 +1,382 @@
+---
+title: "Metadata App README"
+author: "Rachel Molloy"
+date: "July 3, 2021"
+output: html_document
+---
+
+## **Instructions tab**
+All instructions text can be found/sourced from the `instructions_html.R` script:
+```r
+source('instructions_html.R')
+```
+
+## **Plate Layout tab**
+*This tab is where most of the plate layout and metadata is configured by pulling clone-specific data from the BV421 database. This tab will output only a metadata OUTLINE file, which will then be uploaded to the "Run OMIQ" tab. This is because the users may need to configure and layout the plate and associated metadata before the experiment was run on the Cytometer.*
+
+### Constants
+
+All BV421 data is currently referenced from a copy of the BV421 database as an .xlsx file.
+```r
+BV421_DF <- readxl::read_xlsx("bv421_test.xlsx") # copy of BV421 DB Excel being referenced (temporary)
+BV421_DF <- BV421_DF %>% add_row(Clone = "NA", .before = 1) # add row of NA at the top to set default value if no clone selected
+```
+Most other lists referenced in the App are assigned in either the `global.R` or `server.R` scripts at the top. These include lists that feed the selectInputs on the UI, and reference the `fixed_lists.csv` file. 
+
+***
+### Sidebar Panel
+
+Most user inputs from sidebar panel can be found in the `ui.R` script. Inputs that are used in most of the logic and for all experiment types include:
+
+* Plate ID is the default filename convention for the metadata download file. This will eventually be used for the barcoding as well.
+```r 
+textInput("plate_id", "Plate ID*", placeholder="YYYYMMDD-INITIALS-PLATE#") 
+```
+* Experiment Type dictates the template on the UI used to configure the metadata file, and therefore the type of experiment run through OMIQ (currently either OptiBuild (OB), Stability (S), or LEGO).
+```r
+selectInput('experiment_type', 'Experiment Type*', choices = experiment_type_list, selected='S')
+```
+* Sample Type is read from the BV421 DB. If Sample Type selected on UI that is not listed in Sample Type column of BV421 DB for the selected clone, no data will be outputted.
+```r
+selectInput('sample_type', 'Sample Type*', choices = c('LWB', 'PBMC', 'Spleen', 'Bone Marrow', 'Thymus', 'Cell line'), selected = 'LWB')
+```
+* Cell Population Names ('Pop 1', etc.) are read from BV421 DB as arguments to `find_spec_data()` function. 
+```r
+selectizeInput('spec1_name', 'Pop 1 Name*', choices = spec_name_list, selected = 'LWB-L', options = list(create = TRUE))
+selectizeInput('spec2_name', 'Pop 2 Name*', choices = spec_name_list, selected = 'LWB-M', options = list(create = TRUE))
+selectizeInput('spec3_name', 'Pop 3 Name*', choices = spec_name_list, selected = 'LWB-G', options = list(create = TRUE))
+```
+  * `find_spec_data(...)` function pulls spec_names and spec_ranges from BV421 DB based on UI.
+
+Other `renderUI` elements of the sidebar panel, dictated by the `input$experiment_type` selected, include:
+
+* Stability-only renderUI for `input$time_study` (selectInput to select # of years tested) and `input$clone_all` (selectInput to select clone for the plate):
+```r
+uiOutput('stability_ui_time_clone')
+```
+* `renderUI` for row-by-row user input items on sidebar (either time points [`input$time_A`, `input$time_B`, etc.] for Stability experiment or clone names [`input$clone_A`, `input$clone_B`, etc.] for OptiBuild experiment):
+```r
+uiOutput('sidebar_selectInput_items')
+```
+* `stability_time_point_list()` reactive expression is used as an input to populate the `input$time_` inputs with default values
+
+***
+### Main Panel
+
+The main panel UI layout is rendered based on the `input$experiment_type` selected. 
+```r
+uiOutput('main_panel_ui')
+```
+
+#### *Stability/OptiBuild Experiments*:
+
+#### Top section: 
+* Configure titration order, concentrations and units:
+```r
+uiOutput('titration_ui')
+```
+* Configure customized gating controls (Stability-only): 
+```r 
+uiOutput('ui_gating') # outputs an rhandsontable of 96-well plate to configure gating per well id 
+input$use_custom_gating # checkbox to select whether to use gate configured in above table or gating from excelR table on main panel
+``` 
+
+#### Bottom section:
+* Main Excel-like table (using `library(excelR)`) where details of plate layout data are viewed and edited by the user. Based on the `input$experiment_type`, `input$clone_all`/`input$clone_A`, etc., and `input$spec1_name`, etc. values selected, data for the selected clone will be pulled from the BV421 DB and populate the `input$excel_table_ui`:
+```r
+uiOutput('excel_table_ui')
+```
+* `dataTableOutput('preview_metadata_outline_table')` will output a preview of the configured metadata outline table if `input$preview_metadata_outline_button` is clicked.
+* `input$save_plate_per_row_data_button` action button to save plate data after the appropriate fields in the table are edited and reviewed. The `input$download_metadata_outline_file` will be disabled until the the inside of the table is clicked AND the save button is clicked.
+* `input$download_plate_layout` download button will download an Excel file with the plate layout identical to what is seen in the `input$excel_table_ui` table.
+* `input$download_metadata_outline_file` download button will download a metadata outline file. THIS IS NOT THE FINAL METADATA FILE. This file will be uploaded to the "Run OMIQ" tab, where the fcs files, Parameters, and other important user inputs will be configured. 
+
+***
+
+#### *LEGO Experiments*:
+*Note that the code to create the LEGO template utilizes modules in R Shiny. Refer to `modules.R` script for the modules used in this section.
+
+#### Tabs for Reagent #1-4
+Each tab represents the data for each individual reagent/set of reagents. This follows the standard OMIQ and Hamilton LEGO plate layout template. The first 2 rows include an individual reagent with it's test antibody and corresponding test isotype, and 2 sets of reference antibody/isotype pairs. 
+
+#### Select Clone for Each Antibody: 
+* Select the clone for the test antibody, and both references:
+```r
+clone_lego_ui("reag_1", "reag_1",  "reag_1",  "reag_1") # ui module to create the clone selectInputs for each tab
+```
+This UI module has 3 nested UI modules for each type of antibody clone (either test, reference A or reference B). 
+
+* Configure the Antibodies on the plate layout table: 
+```r 
+antibody_table_ui("reag_1") # ui module to create the antibody table
+save_ab_iso_table_ui('reag1_ab') # ui module to save the table
+``` 
+
+* Configure the Isotypes on the plate layout table:
+```r 
+isotype_table_ui("reag_1") # ui module to create the isotype table
+save_ab_iso_table_ui('reag1_iso') # ui module to save the table
+``` 
+
+* Configure the titrations:
+```r
+titr_ui("reag_1") # ui module to set up the titration order and values
+```
+
+* Bottom section - requires that all 8 tables saved prior to clicking the action buttons:
+* `dataTableOutput('preview_metadata_outline_table')` will output a preview of the configured metadata outline table if `input$preview_metadata_outline_button` is clicked. 
+* `input$save_plate_per_row_data_button` action button to save plate data after the appropriate fields in the table are edited and reviewed. The `input$download_metadata_outline_file` will be disabled until the the inside of the table is clicked AND the save button is clicked.
+* `input$download_plate_layout` download button will download an Excel file with the plate layout identical to what is seen in the `input$excel_table_ui` table.
+* `input$download_metadata_outline_file` download button will download a metadata outline file. THIS IS NOT THE FINAL METADATA FILE. This file will be uploaded to the "Run OMIQ" tab, where the fcs files, Parameters, and other important user inputs will be configured. 
+
+***
+
+### How Data is Pulled From BV421 DB & Populated to UI:
+
+#### *Stability/OptiBuild Experiments*
+
+The excelR table that is rendered in the UI for OptiBuild and Stability experiments (and called in `uiOutput('excel_table_ui')`),
+```r
+excelOutput("plate_layout_table_excelR", width = 'auto', height = 'auto')
+```
+has two main arguments:
+
+* The `excelR_columns` object, which configures the column headers, data types, and dropdown list references
+* The dataframe that populates the excelR table:
+```r
+plate_data_per_row_excelR_table <- reactive({
+    if(input$experiment_type != "LEGO"){
+      row_tibble(plate_data_per_row(), input$experiment_type, input$units)
+    }
+  })
+```
+`plate_data_per_row_excelR_table()` is a reactive expression generated if an OptiBuild or Stability experiment is selected. Both experiments will generate the same template excelR table. The only difference will be the default content and how content can be configured in the table. 
+
+```r
+row_tibble(...) # for Stability/OptiBuild experiments
+row_tibble_lego(...) # for LEGO experiments
+``` 
+The `row_tibble(...)` function is a function from `global.R` that configures the layout row-by-row layout of the excelR table for OptiBuild and Stability experiments only. Since LEGO uses a very different template, where each row is not simply a different clone or time point tested, this experiment will call `row_tibble_lego(...)` function from `global.R`.
+
+
+```r
+plate_data_per_row() # reactive expression
+``` 
+is a reactive expression that calls a different function, depending on the `input$experiment_type` selected.
+
+* OptiBuild experiment: `optibuild_metadata_table(...)` function with OptiBuild-specific arguments such as `input$clone_A`, etc. and `input$sample_or_control_A`, etc.
+* Stability experiment: `stability_metadata_table(...)` function with Stability-specific arguments such as `input$clone_all` and `input$time_A`, etc.
+
+Once `input$save_plate_per_row_data_button` is clicked (for non-LEGO experiments), the data populated in the `input$plate_layout_table_excelR` table will be converted to an R object: 
+```r
+saved_plate_per_row_data() # reactive expression
+```
+This data can be downloaded to an Excel file when `input$download_plate_layout` is clicked. The `save_plate_per_row_data()` reactive expression will be inputted to the `create_metadata_table(...)` function, which configures all the user inputs to a final metadata outline file. The result of this function is the following reactive expression:
+```r
+final_metadata_outline_from_inputs() # reactive expression
+```
+This data will be written to a downloadable metadata OUTLINE csv file when `input$download_metadata_outline_file` is clicked. This data can also be previewed when `input$preview_metadata_outline_button` is clicked.
+
+***
+
+#### *LEGO Experiments*
+
+The selected clones for the test, reference A and reference B antibodies are assigned the following variables:
+```r
+lego_test_clone_1 <- test_clone_server("reag_1")                        # test antibody clone
+lego_ref_a_clone_1 <- ref_a_clone_server("reag_1", lego_test_clone_1)   # ref. A antibody clone
+lego_ref_b_clone_1 <- ref_b_clone_server("reag_1", lego_test_clone_1)   # ref. B antibody clone
+```
+These are inputs to the `lego_metadata_table(...)` functions, which is assigned the following variable:
+
+```r
+reagent_1_plate_data()
+```
+This reactive expression variable is an input to the `antibody_table_server()` module. That module, and the `isotype_table_server()` module, are assigned variables,
+```r
+lego_table_from_module_ab_reag1 <- antibody_table_server("reag_1", 1, reagent_1_plate_data) # Antibody table
+lego_table_from_module_iso_reag1 <- isotype_table_server("reag_1", 1)                       # Isotype table
+```
+which are converted to an R object once the table is saved, and assigned the following variables:
+```r
+# Saved Antibody data from table, converted to R object
+saved_plate_per_row_data_lego_ab_reag1 <- eventReactive(reag1_ab_saved(), {
+    data.frame(excel_to_R(lego_table_from_module_ab_reag1()), stringsAsFactors = FALSE)
+})
+  
+# Saved Isotype data from table, converted to R object
+saved_plate_per_row_data_lego_iso_reag1 <- eventReactive(reag1_iso_saved(), {
+    data.frame(excel_to_R(lego_table_from_module_iso_reag1()), stringsAsFactors = FALSE)
+})
+```
+These are arguments to the `create_metadata_table_lego(...)` function, as well as the titration data,
+
+```r
+titr_list_lego_1 <- titr_server("reag_1")
+```
+which outputs a list with the # of titrations, titration order and starting titration. 
+
+For LEGO experiments, the plate data for each reagent is converted into the metadata format as an argument to the `create_metadata_table_lego(...)` function. Each reagent data builds on data from the previous reagent, so the final data for the metadata outline is the variable:
+
+```r
+final_metadata_from_all_plates_lego <- reactive({
+    apply_s_prefix_to_specs(plate_4_metadata_table())
+})
+```
+
+The `apply_s_prefix_to_specs(...)` function takes the final data as an argument to add the 's' prefix to all spec ranges before the metadata is written to the same downloadable csv object that the Stability and OptiBuild experiment templates use. 
+
+***
+
+### Main `global.R` Functions
+
+
+#### Generic Functions
+
+```r
+find_spec_data(...) <- function{}
+```
+This function pulls spec_names and spec_ranges from BV421 DB based on UI. The arguments include the BV421 data (currently the `BV421_DF` constant from `server.R` file), `the sample type, and the cell population inputs. The function will subset the section of the BV421 DB where the sample type and spec name/range data are located for that particular clone. It will find the column index with the cell pop name that matches the cell pop name selected from the UI. It will also output whether the name was found in the Positive or Negative set of columns in the BV421 DB. If a match is found, it will pull the spec range by taking the data from the column index to the right of the spec name column. If a Cell Pop Name selected on UI is not listed in one of the spec range columns from the BV421 DB for the selected clone, no data will be outputted.
+
+***
+
+```r
+plate_config_wells(...) <- function{}
+```
+This function creates the dataframe containing the 96-well plate well IDs, plate rows, and plate columns. This function serves as an outline that feeds the `metadata_outline(...)` function. 
+
+***
+
+```r
+metadata_outline(...) <- function{}
+```
+This function reads the column headers from the `metadata_headers.csv` file, and writes the 96 well IDs, plate row and plate columns to the table from the `plate_config_wells()` function. This function is read in by the `create_metadata_table(...)` function.
+
+***
+
+#### Stability/OptiBuild-Specific Functions
+
+```r
+stability_metadata_table(...) <- function{}
+```
+This function configures the metadata from the BV421 DB that is prep-populated to the plate layout table on the UI for a Stability experiment. Arguments include the BV421 data, the clone selected from the UI, all time inputs, the cell population inputs, the sample type, and the spec ranges found from the `find_spec_data(...)` function. The function will look for the selected clone in the BV421 DB, and populate the applicable columns with the data for the selected clone for all 8 rows of the plate layout table. Other default data, such as the Gating Method and Argument, are also added here. 
+
+***
+
+```r
+optibuild_metadata_table(...) <- function{}
+```
+This function gathers the metadata from the BV421 DB that is prep-populated to the plate layout table on the UI for an OptiBuild experiment. Arguments include the BV421 data, all clones selected from the UI, all sample/control inputs, the cell population inputs, the sample type, and the spec ranges found from the `find_spec_data(...)` function. The function will look for the selected clone in the BV421 DB, and populate the applicable columns with the data for the selected clone for all 8 rows of the plate layout table. Other default data, such as the Gating Method and Argument, are also added here. 
+
+***
+
+```r
+row_tibble(...) <- function{}
+```
+This function configures the metadata pulled from the BV421 DB and writes it to the appropriate column in the plate layout table in the UI. Arguments include the metadata pulled from the BV421 DB (either the `stability_metadata_table(...)` or the `optibuild_metadata_table(...)` function), the selected experiment type, and the selected units. This function is only used for OptiBuild and Stability experiments. 
+
+***
+
+```r
+create_metadata_table(...) <- function{}
+```
+This function takes the data inputted from the plate layout table on the UI and converts it to a 96-well plate format for the metadata outline file using the `slice()` function. The arguments include the data from the plate layout table, data from the `metadata_outline(...)` function, all data user inputs from the UI, and whether the gating control should be taken from the Custom Gating Control tab or from the plate layout table. Then, an 's' is added as the prefix to the spec ranges, and certain cells are converted to NA to meet metadata requirements. The output is written to a downloadable csv file for the metadata outline. This function is only used for OptiBuild and Stability experiments.
+
+***
+
+#### LEGO-Specific Functions
+
+```r
+lego_metadata_table(...) <- function{}
+```
+This function gathers the metadata from the BV421 DB that is prep-populated to the plate layout table on the UI for a LEGO experiment. Arguments include the BV421 data, the clones for the test, reference A and reference B, the cell population inputs, the sample type, and the spec ranges found from the `find_spec_data(...)` function. Each row on the plate layout tables for the LEGO template refers to the test, reference A or reference B sample/isotype. The function will look for the selected clone in the BV421 DB, and populate the applicable columns with the data for the selected clone for all 3 rows of the Antibody plate layout table. Other default data, such as the Gating Method and Argument, are also added here. This is called for each individual reagent tab.
+
+***
+
+```r
+row_tibble_lego(...) <- function{}
+```
+This function configures the metadata pulled from the BV421 DB and writes it to the appropriate column in the Antibody plate layout tables in the UI for LEGO experiments only. Arguments include the reagent # (to know how to pre-populate the "Reagent #", "Row", and "Gating Control" columns, and the metadata pulled from the BV421 DB (from the `lego_metadata_table(...)` function). This function is called for all 4 reagents.
+
+***
+
+```r
+row_tibble_lego_isotypes(...) <- function{}
+```
+This function simply configures the metadata default values that are written to the Isotype plate layout tables in the UI for LEGO experiments only. The only argument is the reagent # to indicate the default values for the "Row" and "Reagent #" column that will prep-populate the Isotype plate layout tables. This function is called for all 4 reagents.
+
+***
+
+```r
+create_metadata_table_lego(...) <- function{}
+```
+This function takes the data inputted from both the Antibody and Isotype plate layout tables on the UI and converts it to a 96-well plate format for the metadata outline file using the `slice()` function. This is created for each individual reagent, and the succeeding reagents take the `create_metadata_table_lego(...)` function output from the previous reagent as an argument, so that the metadata builds for each reagent builds on top of each other. Therefore, *all Antibody and Isotype tables from all 4 reagents must be saved before the final metadata outline csv file is downloaded*. Other arguments include the data from the plate layout tables, data from the `create_metadata_lego_ui(...)` function, the reagent # (since this is called for each individual reagent), and the titration inputs from the UI. The titration order is configured from the `get_lego_titrations(...)` function. Using the `add_data_to_isotypes(...)` function, the data from the Antibody and Isotype tables are configured and written to their respective columns in the metadata outline, created by the `metadata_outline(...)` function. Certain cells are converted to NA to meet metadata requirements, and the output is written to a downloadable csv file for the metadata outline. This function is only used for LEGO experiments.
+
+***
+
+```r
+add_data_to_isotypes(...) <- function{}
+```
+Since the isotypes have some similar data to their corresponding antibodies, this function takes the data from the Antibody tables on the UI, makes copy of the rows as a placeholder for the Isotype metadata, then replaces the data in the appropriate columns with Isotype-specific data. This function is called inside the `create_metadata_table_lego(...)` function.
+
+***
+
+```r
+get_lego_titrations(...) <- function{}
+```
+This function takes the type of antibody (either the test, reference A or reference B), the starting titration, titration order, and # of titrations for a single Reagent # and configures the titration list to be written to the metadata outline table. This is used for LEGO experiments only, and assumes the units are in ug/test. This function first finds the concentrations by either multiplying or dividing the previous titration by 2, and then uses the `findInterval(...)` function to convert the calculated value to the nearest titration value corresponding to a list of options (0.03, 0.06, 0.125, ...). Without this conversion, the concentration values would be different depending on whether "high-to-low" or "low-to-high" were used with the simplified calculation, and either way, concentration values would differ from our standard concentrations we often output for our experiments.
+
+***
+
+```r
+create_metadata_lego_ui(...) <- function{}
+```
+This functions adds the user inputs from the UI to the metadata outline, configured from the `metadata_outline(...)` function. This function is used in LEGO experiments only.
+
+***
+
+```r
+apply_s_prefix_to_specs(...) <- function{}
+```
+Since the metadata table for LEGO experiments is created by building the metadata from each individual reagent on top of each other, applying the 's' prefix to all spec ranges is not done until the final `create_metadata_table_lego(...)` function for Reagent #4 is created. This function outputs the final metadata outline file with data from all 4 reagents for the LEGO experiments, and is written to a reactive expression, `final_metadata_from_all_plates_lego()`, that is used in the `downloadHandler` to download the metadata outline csv file. 
+
+***
+
+## **Run OMIQ tab**
+
+*This tab is where the final user inputs, including the fcs filenames, are configured to the metadata outline generated on the previous tab, and the final metadata file is outputted. The final metadata csv file will be inputted to the OMIQ pipeline, the OMIQ runtime parameters can be configured on the UI, and OMIQ can be run through the App, rather than line-by-line in RStudio.*
+
+The following reactive expression is created with an `eventReactive` from `input$metadata_upload`, the fileInput that uploads the metadata outline csv file that was created from "Plate Layout" tab. Remaining data, such as Parameter, Cytometer, FCS Filenames, etc. are added to the data from this metadata outline file before the final metadata file is configured. 
+```r
+uploaded_metadata_outline()
+```
+
+This reactive expression is assigned to the fcs filenames outputted from either the user selecting the default fcs filenames (see Instructions tab for details on the default filenames) or by extracting the filenames from the fcs files uploaded: `input$fcs_files_upload$name`. The default names will only be used if the `input$default_fcs_files` checkbox is selected AND no fcs files are uploaded. 
+
+```r
+uploaded_fcs_filenames()
+```
+
+The filenames are mapped to the appropriate well IDs using the following function:
+
+```r
+ map_fcs_filenames(uploaded_fcs_filenames(), input$metadata_upload$datapath)
+```
+The function takes in the fcs filenames and metadata outline csv file as arguments, loops through both the filenames and well IDs, uses the `grepl()` function to find a match where the well ID is in the filename string, and assigns that row with the corresponding fcs filename.
+
+The Parameters for each row in the plate are configured in the `output$parameters_table` using the `library(rhandsontable)`, and saved to the following eventReactive expression:
+```r
+parameters_obj()
+```
+where the dropdown lists are dependent on the Cytometer selected. The list of possible parameters for each cytometer can be found in the `cytometer_parameter_lists.csv` file.
+
+An observeEvent shows html on the UI to indicate when the user clicks the `input$save_final_metadata_button`. Once that is clicked, the download button is enabled to download the final metadata file to then be uploaded to OMIQ. Once the user clicks the `input$download_final` downloadHandler button, the following function will be triggered and the output will be written to a csv file:
+
+```r
+merge_metadata_for_OMIQ(...)
+```
+This function adds the cytometer, donor ID, parameters list, fcs filenames, stain date, and notes from the UI to the metadata outline data, converts any necessary cells to NA, and outputs the final metadata table. 
+
+
+
+

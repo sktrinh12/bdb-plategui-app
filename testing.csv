@@ -1,0 +1,441 @@
+Target Species,Specificity (CD),Specificity (non-CD),Clone,Host Species,Isotype (Heavy Chain),Isotype (Light Chain),Isotype Clone,Multiple Model Systems or Strains (Y/N),Stim/Unstim (Y/N),Stimulated Model System or Strain,Stim Reagent,Stim Time (hours),Sample Type,Sample Species,Sample Strain/Sub-Type,BV421 SI,BV421 Optimal,Optimal Units,Positive1_Name,%Positive1,Positive2_Name,%Positive2,Positive3_Name,%Positive3,Negative1_Name,%Negative1,Negative2_Name,%Negative2,Negative3_Name,%Negative3,Co-Stain (Y/N),Co-stain Specificity,Co-stain Clone,Co-stain Concentration (ug/test),Suggested Co-stain Fluorochrome,Shelf-Life (days),Cell Pop for Shelf-Life,Optional Co-stain for Stability? (Y/N),Gating Method,Gating Argument,Notes,TDS
+human,CD64,,10.1,Mouse,IgG1,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,10.2,1.0,ug/test,LWB-M,75-100,LWB-G,0-100,,,LWB-L,0-10,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+rat,CD161a,NKR-P1A,10/78,Mouse,IgG1,kappa,MOPC-31C or MOPC-21,N,N,NA,NA,NA,Spleen ,Rat,Lewis,35.2,0.03,ug/test,Pop,5-15,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,use Pharm Lyse and use Fc block,no figure
+mouse,CD45.2,,104,Mouse,IgG2a,kappa,G155-178,Y,N,NA,NA,NA,Spleen ,Mouse,"B6, SJL",153,0.125,ug/test,B6,95-100,,,,,SJL,0-10,,,,,N,NA,NA,NA,NA,,,,,,"use Pharm Lyse, use FC block",same as model system
+human,CD21,CR2,1048,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,56.5,0.25,ug/test,LWB-L,5-10,,,,,LWB-M,0-10,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,,same as model system
+human,CD117,c-kit,104D2,Mouse,IgG1,kappa,X40,Y,Y,TF-1,GM-CSF,see notes,"Cell line, LWB ",Human,TF-1,41.6,0.25,ug/test,TF-1,90-100,,,,,LWB-L,0-5,LWB-M,0-15,LWB-G,0-5,N,NA,NA,NA,NA,,,,,,TF-1 needs to be cultured with human GM-CSF.  Refer to the cell line database for detail information.,same as model system
+human,CD196,CCR6,11A9,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,60,0.5,ug/test,LWB-L,10-50,,,,,LWB-M,0-10,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,use Pharm Lyse not FACS Lyse,same as model system
+human,CD268,BAFF Receptor,11C1,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,72,0.125,ug/test,LWB-L,5-25,,,,,LWB-M,0-5,LWB-G,0-5,,,N,NA,NA,NA,NA,,,,,,"no clone model system data details found, FACS Lyse listed in protocol",
+human,,"gamma delta TCR, Gma Dta TCR",11F2,Mouse,IgG1,kappa,MOPC-21,N,N,NA,NA,NA,LWB,Human,NA,90.8,0.5,ug/test,LWB-L,1-15,,,,,LWB-M,no spec,LWB-G,no spec,,,Y,CD3,UCHT1,0.06,APC,,,,,,"SJ clone , No QM plan.  Besides single color staining to determine optimal concentration, 2-color vs CD3(UCHT1) is also required to confirm the specificity. ALL gamma/delta TCR+ cells must be CD3+.  It is expected to see two positive peaks on some donors (refer to the letter scanned with batch 88459 for the reason).
+Also, for the two color samples, mix the two antibodies first, then add blood.  Donor #9 & 225 are good donors; collect 30,000-50,000 events
+FACSlyse was used",
+human,CD282,TLR2,11G7,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,117,0.5,ug/test,LWB-M,80-100,LWB-G,0-100,,,LWB-L,0-5,,,,,N,NA,NA,NA,NA,,,,,,FACS Lyse listed in protocol,same as model system
+mouse,,FR4,12A5,Rat,IgG1,,R3-34,,,,,,Spleen ,Mouse,Balb/c,278.9,0.5,ug/test,CD4+ CD25+,70-100,,,,,CD4- CD25-,1-15,,,,,Y,NA,NA,NA,NA,,,,,,"no presentation found in DUPLO folder to upload, PosTest: Balb/C spleen 3 color staining with CD4(clone RM4-5)PE and CD25(clone 7D4)(11/30/17)FITC. Double positive cells: 70-100%
+NegTest: Balb/C spleen 3 color staining with CD4(clone RM4-5)PE and CD25(clone 7D4)FITC. Double negative cells: 0-15%.  Also, collect 50,000 events on lymphocytes gates
+from Halfpipe: Second step: Anti-Rat IgG1,k (clone: RG11/39.4)  FITC, cat # 553892
+Counter staining with CD25 PE and CD4 APC.
+Add 7AAD reagent to each sample test to distinguish the dead from live cells.
+Collect 50,000 events on lymphocytes gates.
+
+All three fractions of PE conjugated (C00,C01, C02) showed similar results. The best optimal concentration was observed at 0.125 ug/test. Released C02 fraction.
+CD4+CD25+ : 70–100%
+CD4–CD25- : 1–15%
+All three fractions of APC conjugated (C00, C01, C02) showed similar results. The best optimal concentration was observed at 0.125 ug/test. Released C02 fraction.
+CD4+CD25+ : 70–100%
+CD4–CD25- : 1–15%
+
+",
+human,CD184,CXCR4,12G5,Mouse,IgG2a,kappa,G155-178,N,N,NA,NA,NA,LWB,Human,NA,8.2,0.5,ug/test,LWB-L,40-100,LWB-M,75-100,LWB-G,75-100,,,,,,,Y,CD14,G155-178,0.06,APC,,,,,,"use of Pharm Lyse listed in clone model system data details, use of FACS Lyse listed in protocol",
+human,CD159a,NKG2A,131411,Mouse,IgG2a,kappa,G155-178,,,,,,??,,,10.57,0.5,ug/test,CD56+ gated PB-L,5-45,,,,,PB-M,0-10,PB-G,0-10,,,Y,,,,,,,,,,"no presentation found in DUPLO folder to upload
+PB-L here refers to ""CD56+ gated PB-L"" for percent positive calculation
+Request Asian Donors or donor # 32, 90, 82, 87
+Collect at least 2,000 CD56+ events. to do this you might have to collect approx 100,000 +/- 25,000 total events due to donor variability",
+human,CD159c,NKG2C,134591,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,40,0.25,ug/test,CD56+ gated PB-L,1-40,,,,,PB-M,0-10,PB-G,0-10,,,Y,,,,,,,,,,"no clone model system data details found and no presentation found in DUPLO folder to upload
+SI 40 (donor #89) and 109 (donor# 32)
+Request Asian donors or # 89, 32, 38, 85, 39, 94
+Collect at least 2,000 CD56+ events. To do this you might have to collect approx 100,000 +/- 25,000 total events due to donor variability",
+human,CD186,CXCR6,13B 1E5,Mouse,IgG2a,kappa,G155-178,N,N,NA,NA,NA,LWB,Human,NA,21.6,1,ug/test,CD3+ LWB-L,1-20,,,,,,,,,,,Y,CD3,"UCHT1, HIT3a",1,PE,,,,,,2-color staining with CD3 (clone UCHT1 or HIT3a) required; use CD3 for gating,
+mouse,CD352,Ly-108,13G3,Mouse,IgG2a,kappa,G155-178,N,N,NA,NA,NA,Thymus ,Mouse,Balb/c,25,0.5,ug/test,Pop,80-100,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,use FC block,
+human,CD45RA,,14.8,Rat,IgG2b,kappa,A95-1,N,N,NA,NA,NA,Spleen ,Mouse,"B6, Balb/c",20,0.5,ug/test,CD3- B6,70-100,CD3+ B6,15-45,,,,,,,,,Y,CD3e,145-2C11,0.25,FITC,,,,,,,same as model system
+mouse,CD196,CCR6,14076,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Spleen ,Mouse,B6,9.7,0.5,ug/test,Pop,15-40,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,"use Pharm Lyse, use FC block",
+mouse,CD3e,,145-2C11,Hamster,IgG1,kappa,A19-3 (note to use in BV605 and test at week 327),N,N,NA,NA,NA,Spleen ,Mouse,"Balb/c, B6",22,0.25,ug/test,CD4+ CD8+,85-100,,,,,CD4- CD8-,0-10,,,,,Y,"CD4, CD8","RM4-5, 53-6.7",0.06,APC,,,,,,"use Pharm Lyse, use FC block",same as model system 
+mouse,CD80,B7-1,16-10A1,Hamster,IgG2,kappa,B81-3,N,Y,B6,LPS,72,Spleen ,Mouse,"Balb/c, B6",61,0.06,ug/test,Stim,30-100,,,,,,,Unstim,0-20,,,N,NA,NA,NA,NA,,,,,,"use Fc block
+PosTest: Balb/c or B6 Spl cultured 48-72 hours in LPS w/ Fc block (30-100%)
+NegTest: Fresh Balb/c or B6 Spl  w/ Fc block (0-20)",same as model system
+human,,ULB P-2/5/6,165903,Mouse,IgG2a,kappa,,Y,N,NA,NA,NA,"Cell line, LWB",Human,NA,16.4,0.5,,Jurkat,80-100,,,,,LWB-L,0-10,LWB-G,0-10,LWB-M,0-20,N,,,,,,,,,,"no clone model system data details found and no presentation found in DUPLO folder to upload
+Opt: 0.5ug
+Jurkat cells 80-100% and PB-L/G each 0-10% PB-M 0-20%
+Stain Index 16.4
+--> No need to do more testing to release other formats",
+mouse,CD45B,,16A,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Thymus ,Mouse,"Balb/c, B6",49.2,0.125,ug/test,Pop,90-100,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,use Fc block,same as model system
+human,CD360,"IL-21R, IL-21 Rcptr",17A12,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,6.9,1,ug/test,CD19+ LWB-L,40-100,,,,,LWB-G,0-20,,,,,Y,CD19,HIB19,0.125,APC,,,,,,2 color staining required with CD19 clone HIB19,same as model system
+mouse,CD3,MolCpx,17A2,Rat,IgG2b,kappa,"R35-38, use A95-1 as reference Ab",,N??,,,,Spleen ,Mouse,"Balb/c, B6",29,1,ug/test,,,,,,,,,,,,,Y,CD19,1D3,,,,,,,,no presentation found in DUPLO folder to upload,same as model system
+human,CD206,mannose receptor,19.2,Mouse,IgG1,kappa,X40,Y,Y,PBMC,GM-CSF,72,"PBMC, LWB",Human,NA,156,0.5,ug/test,PBMC-M,60-100,,,,,LWB-L,0-5,LWB-M,0-5,LWB-G,0-5,N,NA,NA,NA,NA,,,,,,"block treated PBMC with 5% Hu Ab serum before staining, no wash between.  After stimulation, PB-monocytes could be adherent and can be detached with scraper.  Activated PB-monocytes have higher FSC and SSC.  Collect minimum of 3,000 events in PB-monocyte gate.
+PB-M treated with GM-CSF 3 days and with human serum blocking, FACSLyse used.
+FC
+PosTest: PBMC-M treated with GM-CSF(3 days)
+NegTest: PB-L, PB-M, PB-G
+Comment: block treated PBMC with 5% Human Ab serum before staining, no wash between.
+After the stimulation, the monocytes could be adherent.  They can be detached with scraper. Also the monocytes (PBMC-M) are activated so they have higher FSC and SSC.  Be sure to gate the correct population before acquiring.  Make sure to collect 3,000 events in monocyte (PBMC-M) gate.
+SOP_Num: QC5050 for GM-CSF treatment; QC5045 for LWB staining
+CatNum_Iso: 51-542-9007946 MIgG1 clone X40",same as model system
+human,CD267,TACI,"1A1-K21-M22, aka 1A1",Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,LWB,Human,NA,7.5,0.5,ug/test,CD19+ LWB-L,10-80,,,,,LWB-G,0-10,,,,,Y,CD19,HIB19,"0.125, 0.03","APC, PE",,,,,,,
+human,CD141,,1A4,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,10,0.25,ug/test,LWB-M,60-100,LWB-G,5-50,,,LWB-L,0-10,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+mouse,,Ly-6G,1A8,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Bone Marrow ,Mouse,"Balb/c, B6",284,0.5,ug/test,Myeloid Cells,40-80,,,,,Lymphoid Cells,0-10,,,,,N,NA,NA,NA,NA,,,,,,"Target Cells: B6 BM dob: 5/18/15
+FC Block",same as model system
+mouse,CD137,4-1BB,1AH2,Rat,IgG1,kappa,R3-34,N,Y,Balb/C,plate bound CD3 (500A2) & soluble mCD28 (37.51) NA/LE,72,Spleen ,Mouse,"Balb/c, B6",9.2,2,ug/test,CD25+ Stim,30-80,,,,,Unstim,0-5,,,,,Y,CD25,3C7,1,APC,,,,,,"For negative test, use same strain as activated spleen.  For positive test: spl activated for 3 days with plate bound 500A2 (10ug/ml) and soluble 37.51 NA/LE (1ug/ml). Culture cells at 106/ml.  2 color vs. 3C7-PE, titrate at 4, 2 and 1ug to test this product.
+Also, use Pharm Lyse, use Fc block
+Pos. Test: Balb/c Spl with 10 ug/mL CD3 (500A2) purified &  1ug/mL mCD28 (37.51) NA/LE 1ug/ml stim. 72hrs: CD25+: 30-80%",
+mouse,CD1d,,1B1,Rat,IgG2b,kappa,A95-1,N,N,NA,NA,NA,Thymus ,Mouse,Balb/c,19,0.25,ug/test,Pop,60-100,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,use Fc block,no figure
+human,CD314,NKG2D,1D11,Mouse,IgG1,kappa,MOPC-21,N,N,NA,NA,NA,LWB,Human,NA,17,0.5,ug/test,LWB-L,15-60,,,,,LWB-M,0-10,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,use FACS Lyse,same as model system
+mouse,CD19,,1D3,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Spleen ,Mouse,"Balb/c, B6",63,0.25,ug/test,CD3-,80-100,,,,,CD3+,0-5,,,,,Y,CD3e,145-2C11,1,APC,,,,,,"use Pharm Lyse, use Fc block",same as model system
+human,CD43,,1G10,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,1920,0.25,ug/test,LWB-L,80-100,LWB-M,90-100,LWB-G,90-100,,,,,,,N,NA,NA,NA,NA,,,,,,"negative test spec listed as L (B cell subset)
+positive test spec specifically listed as: L (T cell subset)",same as model system
+mouse,,TIGIT,1G9 aka 1G9.36,Mouse,IgG1,kappa,X40,N,Y,B6,Con A,48,Spleen ,Mouse,B6,7.2,0.5,ug/test,CD3+,30-100,,,,,CD3-,0-15,,,,,Y,CD3,145-2C11,1,APC,,,,,,,
+mouse,CD16/32,,2.4G2,Rat,IgG2b,,,,,,,,Spleen ,Mouse,"Balb/c, B6",28,0.25,ug/test,,,,,,,,,,,,,,NA,NA,NA,NA,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+mouse,,NKG2A/C/E,20d5,Rat,IgG2a,kappa,R35-95,,N,,,,Spleen ,Mouse,B6,56,1,ug/test,,,,,,,,,,,,,Y,NA,NA,NA,NA,,,,,,no presentation found in DUPLO folder to upload,same as model system
+human,CD277,,232-5,Mouse,IgG2a,kappa,G155-178,N,N,NA,NA,NA,LWB,Human,NA,28.1,0.25,ug/test,LWB-L,70-100,LWB-M,70-100,,,LWB-G,0-70,,,,,N,NA,NA,NA,NA,,,,,,FACS Lyse listed in protocol,
+human,CD86,,"2331, FUN-1",Mouse,IgG1,kappa,"X40 for PE-CF594, MOPC-21 for other color",N,N,NA,NA,NA,"Cell line, LWB",Human,NA,162,0.125,ug/test,Pop,90-100,,,,,LWB-L,0-10,G,0-10,,,N,NA,NA,NA,NA,,,,,,species also listed as rhesus and cyno.  also no presentation found in DUPLO folder to upload,same as model system
+human,CD340,HER-2,24D2 aka 24D2.168,Mouse,IgG1,,,N,N,NA,NA,NA,,,,324,0.5,ug/test,,,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+human,CD105,endoglin,266,Mouse,IgG1,kappa,MOPC-21,N,N,NA,NA,NA,Cell line ,Human,U937,34,1,ug/test,Pop,80-100,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,U937 cell line,U937 cell line
+mouse,CD138,Syndecan-1,281-2,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Bone Marrow ,Mouse,"Balb/c, B6",4.8,0.125,ug/test,CD45R+,35-75,,,,,CD45R-,0-10,,,,,Y,CD45R (B220),RA3-6B2,0.06,APC,,,,,,"TDS caption: Bone marrow cells from C57BL/6 mice were preincubated with Purified Rat Anti-Mouse CD16/CD32 (Mouse BD Fc Block™) (Cat. no.
+553141/553142). The cells were then stained with APC Rat Anti-Mouse CD45R/B220 (Cat. No. 553092/561880) and with either
+BD Pharmingen™ Brilliant Violet™ 421 Rat IgG2a, ? Isotype Control (Cat. No. 562602, Left Panel) or with BD Pharmingen™
+Brilliant Violet™ 421 Rat Anti-Mouse CD138 antibody, use FC block.",see TDS description in notes and use Fc block
+human,CD133,,293-C3,,,,,,,,,,,,,11.8,0.125,ug/test,,,,,,,,,,,,,N,,,,,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+mouse,CD335,NKp46,29A1.4,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Spleen ,Mouse,B6,22.1,0.5,ug/test,NK1.1+,2-8,CD335+ total,2-8,,,NK1.1-,0-1,CD335+ subset,0-1,,,Y,NK1.1,PK136,0.125,PE,,,,,,"use Pharm Lyse, use Fc block and collect 50K lymphoid cells",same as model system
+human,CD25,IL-2 Receptor alpha,2A3,Mouse,IgG1,kappa,X40,Y,Y,PBMC,PHA,72,"PBMC, LWB",Human,NA,450,0.25,ug/test,PBMC-L,85-100,LWB-L,1-43,,,LWB-M,0-10,LWB-G,0-10,,,Y,CD4,RPA-T4,0.25,APC,,,,,,use FACS Lyse and counterstain for LWB only ,
+human,,CX3CR1,2A9-1,Rat,IgG2b,kappa,R35-38,N,N,NA,NA,NA,LWB,Human,NA,127.8,0.25,ug/test,LWB-L,10-50,LWB-M,10-100,,,LWB-G,0-100,,,,,N,,,,,,,,,,no presentation found in DUPLO folder to upload,
+mouse,CD184,,"2B11, 2B11/CXCR4",Rat,IgG2b,kappa,"FITC and PE use A95-1, BV421 use R35-38",N,N,NA,NA,NA,Thymus ,Mouse,Balb/c,8,1,ug/test,CD4+,45-95,,,,,,,,,,,Y,CD4,RM4-5,0.06,APC,,,,,,use Fc block,same as model system
+mouse,CD244.2,,2B4,Mouse,IgG2b,kappa,"if MPC-11 is unavailable, use clone 27-35.  Ref Ab should be MPC-11.",Y,Y,B6,IL-2,120,Spleen,Mouse,"Balb/c, B6",8.6,1,ug/test,B6 LAK NK1.1+,85-100,,,,,Balb/c,0-5,,,,,Y,NK1.1,PK136,,APC,,,,,,B6 LAK cell (IL-2 stim 5 days) NK1.1+ subset,same as model system
+human,CD275,,2D3/B7-H2,Mouse,IgG2b,kappa,27-35,N,N,NA,NA,NA,Cell line ,Hamster,CHO,65,0.5,ug/test,CHO-B7-H2,85-100,,,,,CHO-K1,0-10,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+human,CD195,,2D7 aka 2D7/CCR5,Mouse,IgG2a,kappa,G155-178,N,N,NA,NA,NA,LWB,Human,NA,39.3,0.25,ug/test,LWB-L,15-45,,,,,LWB-G,0-75,,,,,N,NA,NA,NA,NA,,,,,,FACS Lyse listed on protocol,same as model system
+mouse,CD103,,2E7,,,,,N,N,NA,NA,NA,,Human,NA,18.9,1,ug/test,,,,,,,,,,,,,N,,,,,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+mouse,,KLRG1,2F1,Hamster,IgG2,kappa,B81-3,N,N,NA,NA,NA,Spleen ,Human,B6,18.1,0.125,ug/test,NK1.1+,20-70,,,,,NK1.1-,0-5,,,,,Y,NK1.1,PK136,0.25,APC,,,,,,"use Pharm Lyse, use Fc block",same as model system
+mouse,,I-A/I-E,2G9,Rat,IgG2a,kappa,R35-95,Y,N,NA,NA,NA,Spleen ,Human,"B6,SJL",104.6,0.125,ug/test,CD3- B6,85-100,,,,,CD3+ B6,0-50,SJL,0-10,,,Y,CD3e,145-2C11,1,APC,,,,,,no ,same as model system
+human,CD20,,2H7,Mouse,IgG2b,kappa,27-35,N,N,NA,NA,NA,LWB,Human,NA,158,0.25,ug/test,LWB-L,5-35,,,,,LWB-M,0-30,LWB-G,0-10,,,Y,CD19,HIB19,,APC,,,,,,"Species also listed as NHP
+positive spec specifically listed as: L (Pan B; T-cell subset)",same as model system
+human,CD197,CCR7,2-L1-A,Mouse,IgG1,,,N,,,,,,Human,NA,67,0.5,ug/test,,,,,,,,,,,,,N,,,,,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+mouse,CD162,,2PH1,Rat,IgG1,kappa,R3-34,N,N,NA,NA,NA,Spleen ,Human,Balb/c,14,0.125,ug/test,CD3+,90-100,,,,,CD3-,15-40,,,,,Y,CD3e,145-2C11,1,APC,,,,,,"use Pharm Lyse, use Fc block",same as model system
+human,CD8b,,2ST8.5H7,Mouse,IgG2a,kappa,G155-178 APC (7/31/16),N,N,NA,NA,NA,LWB,Human,NA,797,0.5,ug/test,LWB-L,13-48,,,,,LWB-M,0-20,LWB-G,0-44,,,N,NA,NA,NA,NA,,,,,,spec from hCD8 clone RPA-T8,
+human,CD11c,,3.9,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,14,1,ug/test,LWB-L,1-20,LWB-M,10-100,LWB-G,1-100,,,,,,,N,NA,NA,NA,NA,,,,,,"species also listed as positive on rhesus, cyno, baboon, and no presentation found in DUPLO folder to upload
+Released on additonal formats in OptiBuild wave 3d
+Both BV421EZ and BB700 optimal are 1ug per test.",
+mouse,CD40,,3/23,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Spleen ,Mouse,"Balb/c, B6",19.9,0.5,ug/test,CD3-,80-100,,,,,CD3+,0-10,,,,,Y,CD3e,145-2C11,1,APC,,,,,,,
+mouse,CD45,,30-F11,Rat,IgG2b,kappa,"R35-38, A95-1 listed in clone model system details spreadsheet",N,N,NA,NA,NA,Spleen ,Mouse,Balb/c,440,0.25,ug/test,Pop,95-100,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+mouse,CD90.2,Thy1.2,30-H12,Rat,IgG2b,kappa,"R35-38, A95-1",N,,,,,Thymus ,Mouse,"Balb/c, B6",2294,0.5,,,,,,,,,,,,,,N,,,,,,,,,,no presentation found in DUPLO folder to upload,
+human,CD366,Tim-3,344823,Rat,IgG2a,,,,,,,,,,,6,0.5,,,,,,,,,,,,,,N,,,,,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+mouse,CD28,,37.51,,,lambda,Ham IgG2 l1 Ha4/8,,,,,,Spleen ,,,2.8,0.5,,,,,,,,,,,,,,Y,,,,,,,,,,"PosTest: BALB/c or B6 CD4+CD8+ (RM4-5-FITC + 53-6.7-FITC)spleen cells(80-100%)w/ Fc Block, incubate >40 minutes
+NegTest: BALB/c or B6 CD4-CD8- spleen cells (RM4-5-FITC + 53-6.7-FITC)(0-20%)w/ Fc Block, incubate >40 minutes, no presentation found in DUPLO data folder",same as model system
+mouse,CD31,PECAM-1,390,Rat,IgG2a,kappa,R35-95,N,,,,,Bone Marrow ,Mouse,"Balb/c, B6",31.3,0.125,,,,,,,,,,,,,,Y??,CD45R,RA3-6B2,,,,,,,,no BV421EZ reference slides found in DUPLO folder to upload,same as model system
+human,CD79b,,3A2-2E7,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,269.5,0.5,ug/test,LWB-L,5-25,,,,,LWB-M,0-10,LWB-G,0-10,,,Y,CD19,HIB19,0.125,APC,,,,,,wash twice after staining and FACS Lyse listed in protocol,LWB with CD19
+mouse,CD25,Il-2 Receptor alpha,3C7,Rat,IgG2b,kappa,"R25-28, Ref Ab A95-1",N,Y,NA,Con A,72,Spleen ,Mouse,Balb/c,7,1,ug/test,Stim,80-100,,,,,Unstim,0-10,,,,,N,NA,NA,NA,NA,,,,,,"Use Pharm Lyse, use FC block",same as model system
+human,CD197,CCR7,3D12,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,LWB,Human,NA,29,0.5,ug/test,LWB-L,30-60,,,,,LWB-M,0-10,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,"use Pharm Lyse.  Also, donor dependent, review previous data.",
+human,CD32,FcyRII aka Fcy Receptor II,3D3,Mouse,IgG1,kappa,"MOPC-21, X40",N,,,,,LWB,Human,NA,40.6,0.5,ug/test,L,0,M,0,G,0,,,,,,,N,NA,NA,NA,NA,,,,,,Staining on monocytes and granulocytes varies between donors from very weak to strong.  No presentation found in the DUPLO folder to upload.,
+mouse,CD54,ICAM-1,3E2,Hamster,IgG1,kappa,A19-3,N,Y,Spleen,LPS,48,Spleen ,Mouse,"Balb/c, B6",16.4,0.25,ug/test,Pop,30-100,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,"Positive spec can be unactivated spl (30-80%) and/ or LPS activated spl (80-100%).  If using both, activated and non activated spl species must be the same.  Attached data does not depict an LPS activated cell model.  ",same as model system
+human,CD16,,3G8,Mouse,IgG1,kappa,"X40, other color use MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,21,0.5,ug/test,LWB-L,5-33,LWB-M,15-100,LWB-G,90-100,,,,,,,Y,CD56,B159,0.125,APC,,,,,,"positive lymphocyte population = T cells, negative lymphocyte population = B cells, weak on monocytes",same as model system
+mouse,CD106,VCAM-1,429 (MVCAM.A),Rat,IgG2a,kappa,R35-95,Y,N,NA,NA,NA,"Bone Marrow, Spleen",Mouse,"Balb/c, B6",9,0.125,ug/test,B6 BM high SSC cells,15-60,,,,,B6 BM low SSC cells,0-15,B6 Spleen,0-10,,,N,NA,NA,NA,NA,,,,,,"Use Pharm Lyse and use Fc block. 
+Specification details = PosTest: Balb/C or B6 BM SSC-A High cells:15-60%.  Analyze BM SSC vs. Alexa647.
+NegTest options: 1) Balb/C or B6 BM SSC-A Low cells:0-15%  2)Balb/C or B6 spleen cells: 0-10%",same as model system
+human,CD198,CCR8,433H,Mouse,IgG2a,,G155-178,N,,,,,LWB,Human,NA,10,0.25,ug/test,L,1-30,M,1-100,G,0-10,,,,,,,N,,,,,,,,,,"no clone model system data details found and presentation found in DUPLO folder to upload
+Collect 50000 events in living gate for analysis",
+mouse,,Singlec-H,440c aka 440c.95,Rat,IgG2b,,,,,,,,,,,87.95,0.125,ug/test,,,,,,,,,,,,,N,,,,,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+mouse,CD192,CCR2,475301,Rat,IgG2b,,,,,,,,Spleen ,Mouse,,47,0.125,ug/test,,,,,,,,,,,,,,,,,,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+human,,ROR1,4A5,Mouse,IgG2b,kappa,,,,,,,Cell line ,,,70.1,1,ug/test,,,,,,,,,,,,,N,,,,,,,,,,no presentation found in DUPLO folder to upload,same as model system
+mouse,CD197,CCR7,4B12,Rat,IgG2a,,R35-95,N,N,NA,NA,NA,Thymus ,Mouse,Balb/c,4,1,ug/test,CD3+,5-20,,,,,CD3-,0-2,,,,,Y,CD3,145-2C11,0.25,FITC,,,,,,use Fc block,
+human,CD137,,4B4-1,Mouse,IgG1,kappa,X40,Y,Y,PBMC,Con A,72,"PBMC, LWB",Human,NA,18,1,ug/test,PBMC-L,15-90,,,,,LWB-L,0-5,LWB-M,0-5,LWB-G,0-5,N,NA,NA,NA,NA,,,,,,"negative model = LWB, use FACS Lyse for LWB preparation
+PBMC stimulated with Con A for 3 days",same as model system
+human,CD135,,4G8,Mouse,IgG1,kappa,"MOPC-21, X40",Y,N,NA,NA,NA,"Cell line, LWB",Human,REH,14,1,ug/test,REH,70-100,,,,,LWB-L,0-5,LWB-M,0-50,LWB-G,0-10,N,NA,NA,NA,NA,,,,,,"negative model = LWB, use FACS Lyse for LWB preparation",same as model system
+mouse,CD3e,,500A2,Syrian Hamster,IgG2,kappa,B81-3,N,N,NA,NA,NA,Spleen ,Mouse,"B6, Balb/c",32.5,0.5,ug/test,CD4+CD8+,85-100,,,,,CD4-CD8-,0-10,,,,,Y,"CD4, CD8","RM4-5, 53-6.7",0.06,FITC,,,,,,use Fc block,
+human,CD44,,515,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,419,1,ug/test,LWB-L,90-100,LWB-M,90-100,LWB-G,90-100,,,,,,,N,NA,NA,NA,NA,,,,,,,
+human,CD34,,563,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,,,,212,1,ug/test,,,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,"no presentation found in DUPLO  folder to upload.  Species also listed as positive on rhesus, and cyno, but negative on baboon.
+PBMC (fresh) 2-color vs. CD14; CD14 must be in all tubes, and use it to gate out CD14+ monocytes.  CD34+ stem cells in PBMC are in CD14- population. Run SSC in Log and collect 200,000-300,000 event. It is helpful to make two isotype control tubes and two reference tubes since it takes time to set up.  If the small tiny positive population is hard to be defined on the screen, it will be very helpful to collect one reference tube and print the data out to check the setting before analyze all tubes.  Analyze the data as CD14 vs SSC in log.
+Note: no isotype is needed for CD14",same as model system
+human,CD34,,581,Mouse,IgG1,kappa,"X40 for PE-CF594, MOPC-21 for PE",N,N,NA,NA,NA,PBMC,Human,NA,212,0.5,ug/test,,,,,,,,,,,,,Y,CD14,M5E2,0.125,"PE, FITC, APC",,,,,,"noted as Pass/ Fail test, collect 250,000 to 500,000 lymphocytes and set SSC to log scale",same as model system
+human,CD90,Thy-1,5E10,Mouse,IgG1,kappa,X40,Y,N,NA,NA,NA,"Cell line, LWB",Human,HEL,155,0.5,ug/test,HEL,90-100,,,,,LWB-L,0-10,LWB-M,0-10,LWB-G,0-10,N,NA,NA,NA,NA,,,,,,"Positive test = HEL cell line OR use
+stem cells (PBMC or Bone Marrow) (BM) vs CD34 (only pre-bottling)
+BM is unavailable for routine QC of this product.  Use fresh PBMC instead. CD90 is only partially positive in CD34+ cell population.  CD34 must be in all the samples for gating purpose (SSC-log vs the channel of CD34).  Use 1 million cells/test and collect 200,000 to 300,000 events total. It is suggested to do two samples of Ms IgG1 isotype control staining with PBMCs since it takes time to set up the machine properly. The optimal concentration should be determined based on the staining on HEL.",
+human,CD45RA,,5H9,Mouse,IgG1,kappa,X40,N,,,,,LWB,Human,NA,470,0.125,ug/test,,,,,,,,,,,,,N,,,,,,,,,,"species is Hu but species also listed as NHP and positive on cyno, rhesus and baboon 
+ No presentation found in DUPLO folder to upload",same as model system
+human,CD18,,6.7,Mouse,IgG1,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,220,1,ug/test,LWB-L,90-100,LWB-M,90-100,LWB-G,90-100,,,,,,,N,NA,NA,NA,NA,,,,,,double peaks expected on L,same as model system
+human,,TIGIT,741182,Mouse,IgG2b,,27-35,N,N,,,,LWB,Human,NA,11.6,0.5,ug/test,L,10-50,M,0-10,G,0-10,,,,,,,N,,,,,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+mouse,CD56,NCAM-1,809220,Rat,IgG2a,,,,,,,,,,,24,0.5,ug/test,,,,,,,,,,,,,N,,,,,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+human,,siglec-8,837535,Mouse,IgG1,,,,,,,,,,,26,0.25,ug/test,,,,,,,,,,,,,N,,,,,,,,,,no clone model system data details found and no presentation found in DUPLO folder to upload,
+human,CD210b,"IL-10 Receptor B, IL-10R Bta",90220,Mouse,IgG1,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,3.3,1,ug/test,LWB-L,8-20,LWB-M,50-90,,,LWB-G,0-20,,,,,N,NA,NA,NA,NA,,,,,,"tested both in FACS Lyse and Pharm Lyse, CD14 (recommended in APC) was listed as a counterstain but is not used or displayed in attached data",
+human,CD56,NCAM-1,B159,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,73.5,0.25,ug/test,LWB-L,8-35,,,,,LWB-M,0-20,LWB-G,0-10,,,Y,CD16,3G8,1,APC,,,,,,"use Pharm Lyse not FACS Lyse
+positive specifically listed as: L (T-subset), NK",same as model system
+human,CD21,,B-ly4,Mouse,IgG1,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,183.1,0.125,ug/test,LWB-L,5-28,,,,,LWB-M,0-10,LWB-G,0-10,,,Y,CD19,HIB19,0.25,APC,,,,,,,same as model system
+human,CD11c,,B-ly6,Mouse,IgG1,kappa,"X40 for PE-CF594, MOPC-21 for other color",N,N,NA,NA,NA,LWB,Human,NA,7,0.5,ug/test,LWB-L,7-40,LWB-M,90-100,LWB-G,80-100,,,,,,,Y,CD14,M5E2,1,APC,,,,,,,same as model system
+human,CD28,,CD28.2,Mouse,IgG1,kappa,MOPC-21,N,N,NA,NA,NA,LWB,Human,NA,100,0.25,ug/test,LWB-L,55-90,,,,,LWB-M,0-10,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,"do not use donor #201 and #323 (MHT, 03/07/2007)",same as model system
+human,CD11b,,D12,Mouse,IgG2a,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,38.3,0.5,ug/test,LWB-L,10-40,LWB-M,70-100,LWB-G,90-100,,,,,,,Y,CD14,M5E2,0.125,APC,,,,,,,
+human,CD161,,DX12,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,21,0.5,ug/test,LWB-L,15-50,,,,,LWB-M,0-10,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,,same as model system
+human,CD95,Fas,DX2,Mouse,IgG1,kappa,"X40 for PE-CF594, MOPC-21 for other colors",N,N,NA,NA,NA,LWB,Human,NA,12,1,ug/test,LWB-L,35-95,LWB-M,80-100,LWB-G,90-100,,,,,,,N,NA,NA,NA,NA,,,,,,"species also listed as rhesus, cyno, baboon, pig, and dog",same as model system
+human,CD8,,G42-8,Mouse,IgG2a,kappa,G55-178,N,N,NA,NA,NA,LWB,Human,NA,1549,0.25,ug/test,LWB-L,15-50,,,,,LWB-M,0-20,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,,
+human,CD163,,GHI/61,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,42,1,ug/test,LWB-M,30-100,,,,,LWB-L,0-10,LWB-G,0-10,,,Y,CD14,M5E2,0.125,APC,,,,,,"collect 2,000 events in every monocyte gate",co-stain with CD14 for TDS
+human,CD45,,HI30,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,120,0.5,ug/test,LWB-L,85-100,LWB-M,90-100,LWB-G,90-100,,,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+human,CD19,,HIB19,Mouse,IgG1,kappa,MOPC-21,N,N,NA,NA,NA,LWB,Human,NA,116,0.125,ug/test,LWB-L,5-28,,,,,LWB-M,0-10,LWB-G,0-5,,,N,NA,NA,NA,NA,,,,,,,
+human,CD38,,HIT2,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,19,0.5,ug/test,LWB-L,40-90,LWB-M,80-100,,,LWB-G,0-100,,,,,Y,CD14,M5E3,,PE,,,,,,"positive on L (T+B cells), NK, and monocytes, weak on G (+/-)",same as model system
+human,CD8,,HIT8a,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,1281,0.25,ug/test,LWB-L,13-48,,,,,LWB-M,0-20,LWB-G,0-20,,,N,NA,NA,NA,NA,,,,,,"do not use donor #93, #198",
+human,CD183,,IC6/CXCR3 aka IC6 aka LS177-1C6,Mouse,IgG1,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,25,1,ug/test,LWB-L,40-60,,,,,LWB-M,0-10,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,"species also listed as rhesus, cyno, baboon",Same as model system
+human,CD11b,Mac-1,ICRF44,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,14.6,0.5,ug/test,LWB-L,10-40,LWB-M,70-100,LWB-G,90-100,,,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+human,CD81,TAPA-1,JS-81,Mouse,IgG1,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,150,1,ug/test,LWB-L,90-100,LWB-M,60-100,LWB-G,1-50,,,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+human,CD4,,L200,Mouse,IgG1,kappa,"X40 for PE-CF594, use MOPC-21 for other colors",N,N,NA,NA,NA,LWB,Human,NA,315,0.125,ug/test,LWB-L,20-60,LWB-M,20-100,LWB-G,0-20,,,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+human,CD14,,M5E2,Mouse,IgG2a,kappa,G155-178,N,N,NA,NA,NA,LWB,Human,NA,122.3,0.5,ug/test,LWB-M,80-100,,,,,LWB-L,0-5,LWB-G,1-100,,,N,NA,NA,NA,NA,,,,,,"must collect 2,000 events in every monoctye gate",same as model system
+human,CD29,,MAR4,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,75,1,ug/test,LWB-L,90-100,LWB-M,90-100,LWB-G,60-100,,,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+human,CD23,,M-L233,Mouse,IgG1,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,15,0.5,ug/test,LWB-L,4-15,,,,,LWB-M,0-15,LWB-G,0-10,,,Y,CD19,HIB19,,APC,,,,,,"collect 10,000 events in lymphocyte gate to see clear positive peak
+positive specifically listed as: L (B cells)",
+human,CD27,,M-T271,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,225.3,0.25,ug/test,LWB-L,55-100,,,,,LWB-M,0-79,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,"positive specifically listed as: L, Tsub",same as model system
+human,CD33,,P67.6,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,219,0.125,ug/test,LWB-M,80-100,LWB-G,40-100,,,LWB-L,0-10,,,,,N,NA,NA,NA,NA,,,,,,"weak positive on granulocytes, SJ clone and use QM plan for clone WM53",
+human,CD4,,RPA-T4,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,364.4,0.5,ug/test,LWB-L,20-60,LWB-M,20-100,,,LWB-G,0-40,,,,,Y,CD14,M5E2,,APC,,,,,,"do not use donor #288, #209, #277, good donors = #106, #249",same as model system
+human,CD8,,RPA-T8,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,342,0.25,ug/test,LWB-L,13-48,,,,,LWB-M,0-20,LWB-G,0-44,,,N,NA,NA,NA,NA,,,,,,"positive on cyno, rhesus, baboon",same as model system
+human,CD11c,,S-HCL-3,Mouse,IgG2b,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,7.6,0.5,ug/test,LWB-L,7-40,LWB-M,90-100,LWB-G,80-100,,,,,,,N,NA,NA,NA,NA,,,,,,QM plan from Hu CD11c (B-Ly6),
+human,CD8,,SK1,Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,464,0.25,ug/test,LWB-L,13-48,,,,,LWB-M,0-20,LWB-G,0-44,,,N,NA,NA,NA,NA,,,,,,FACS Lyse listed in protocol,same as model system
+human,CD62L,"anti-Leu-8, L-selectin, LECAM-1",SK11,Mouse,IgG2a,kappa,G155-178,N,N,NA,NA,NA,LWB,Human,NA,232,0.25 or 0.5,ug/test,LWB-L,15-90,LWB-M,50-100,LWB-G,90-100,,,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+human,CD3,,SK7,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,250,0.25,ug/test,LWB-L,50-80,,,,,LWB-M,0-30,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,FACS Lyse listed in protocol,
+human,CD3,,SP34-2,Mouse,IgG1,lambda,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,215,0.5,ug/test,LWB-L,50-85,,,,,LWB-M,0-30,LWB-G,0-10,,,N,NA,NA,NA,NA,,,,,,"species also listed as NHP and positive on rhesus, cyno, and baboon",same as model system
+human,CD5,,UCHT2,Mouse,IgG1,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,263,0.125,ug/test,LWB-L,50-90,,,,,LWB-M,0-30,LWB-G,0-20,,,Y,CD14,M5E2,1,APC,,,,,,let Ab sit at room temperature for 45- 60 minutes before using,same as model system
+human,CD15,,W6D3,Mouse,IgG1,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,1240,0.5,ug/test,LWB-G,85-100,LWB-M,1-100,,,LWB-L,0-10,,,,,Y,CD14,M5E2,,APC,,,,,,"weak positive on monoctyes, donor dependent",same as model system
+human,CD13,,WM15,Mouse,IgG1,kappa,"MOPC-21, X40",N,N,NA,NA,NA,LWB,Human,NA,48,0.5,ug/test,LWB-M,85-100,LWB-G,85-100,,,LWB-L,0-5,,,,,N,NA,NA,NA,NA,,,,,,,same as model system
+mouse,,Singlec-H,440c,,IgG2b,,,,,,,,,,,87.95,0.125,ug/test,,,,,,,,,,,,,,,,,,,,,,,,
+human,CD371,Clec12A,50C1,Mouse,IgG2a,kappa,G155-178,N,N,NA,NA,NA,LWB,Human,NA,135,0.25,ug/test,LWB-M,90-100,LWB-G,90-100,,,LWB-L,0-10,,,,,N,NA,NA,NA,NA,,,,,,Must wash 2X after staining,
+human,CD106,VCAM-1,51-10C9,Mouse,IgG1,kappa,"X40, MOPC-21",N,Y,HUVEC,TNF,24H,Cell line ,Human,NA,527.9,1,ug/test,activated HUVEC,45-100,,,,,resting HUVEC,0-10%,,,,,N,NA,NA,NA,NA,,,,,,,
+mouse,CD90.2,Thy-1.2,53-2.1,Rat,IgG2a,kappa,R35-95,Y,N,NA,NA,NA,Thymus ,Mouse,"Balb/c, AKR",1028.5,0.25,ug/test,Balb/c Thymus,90-100,,,,,AKR Thymus,0-5%,,,,,N,NA,NA,NA,NA,,,,,,"HUVEC cell needs to be cultured in a special medium. Refer to cell line database for the detail information. When the cell grows very slow and/or become TNF induction resistant, it is the time to order a new one. Add 7AAD",
+mouse,CD8a,,53-6.7,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Spleen ,Mouse,Balb/c,62,0.06,ug/test,CD3+,25-50,,,,,CD3-,0-10%,,,,,N,CD3e,145-2C11,NA,APC,,,,,,"Pharmlyse, Fc Block, 7AAD",
+mouse,CD5,,53-7.3,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Spleen,Mouse,Balb/c,86.7,0.5,ug/test,CD3+,75-100,,,,,CD3-,1-30%,,,,,Y,CD3e,145-2C11,NA,APC,,,,,,"Pharmlyse, Fc Block, 7AAD",
+human,CD144,VE-cadherin,55-7H1,Mouse,IgG1,kappa,"X40, MOPC-21",Y,N,NA,NA,NA,"HUVEC, LWB",Human,NA,183,0.125,ug/test,HUVEC,90-100,,,,,LWB-L,0-5%,LWB-M,0-20%,LWB-G,0-15%,N,NA,NA,NA,NA,,,,,,"FACSlyse,  resting HUVEC note: this protein is sensitive to trypsin, do not use trypsin, must use Cell Dissociation Buffer",
+human,CD40,,5C3,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,60.7,0.03,ug/test,LWB-L,1-30,LWB-M,1-100,,,LWB-G,0-20,,,,,N,NA,NA,NA,NA,,,,,,FACSlyse,
+mouse,CD366,Tim3,5D12/TIM-3 (also known as 5D12),Mouse,IgG1,kappa,"X40, MOPC-21",,,,,,,,,9.54,0.25,ug/test,,,,,,,,,,,,,,,,,,,,,,,No LEGO/DUPLO data available,
+mouse,CD122,IL-2 Receptor ?,5H4,Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Spleen ,Mouse,Balb/c,18,0.5,ug/test,CD49b+,70-100,,,,,CD49b-,5-30,,,,,Y,CD49b,DX-5,NA,PE,,,,,,7AAD,
+human,CD354,TREM1,6B1,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,12.2,0.5,ug/test,LWB-M,70-100,LWB-G,70-100,,,LWB-L,0-15,,,,,N,NA,NA,NA,NA,,,,,,,
+human,,Invariant NK T cel,6B11,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,75.4,0.5,ug/test,LWB-L CD3+,Pass/Fail,,,,,,,,,,,Y,CD3,UCHT1,NA,APC,,,,,,"2-color staining with CD3(UCHT1)-PE 51-550-30105; All 6B11+ cells must be CD3+. 6B11+ cells are only <2.5% in CD3+. Analyze data in 2-color dot plot format. Donor dependent:  7, 201, 2044, or any Asian donor. Collect 100,000-200,000 in CD3 positive gate",
+human,CD182,CXCR2,6C6,Mouse,IgG1,lambda,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,34.1,0.5,ug/test,LWB-L CD3+,5-35,LWB-M,40-100,LWB-G,90-100,,,,,,,N,NA,NA,NA,NA,,,,,,"FACSlyse, PosTest: PB-L (CD56 & NK), PB-M (weak), PB-G",
+human,CD169,Siglec-1,7-239,Mouse,IgG1,kappa,"X40, MOPC-21",N,Y,PBMC,IFNalpha2a,48H,PBMC,Human,NA,27.4,0.5,ug/test,activated CD14+/CD169+ PBMC-M ,80-100,,,,,activated CD14+/CD169+ PBMC-L,0-40,,,,,Y,CD14,"RB16-9, RB17-3",NA,APC,,,,,,"2-color staining with CD14 clone M5E2 required; use Human FC block(Cat. No. 564219/564220), before staining; staining CD169 and CD14 together, SOP_Num:  QC5043 for isolation of PBMCs; QC5045 for staining, wash twice after staining",
+human,CD276,B7-H3,7-517,Mouse,IgG1,kappa,X40,Y,Y,Differentiated monocytes (immature DC),IL-4 and GM-CSF,5 days ,differentiated monocytes,Human,NA,167.4,0.5,ug/test,immature dendtritic cells with IL-4 and GM-CSF 5 days ,70-100,,,,,,,,,,,N,NA,NA,NA,NA,,,,,,No entry in the Clone model System 053119 v1 master v3 file.,
+human,,GARP,7B11 (also known as CMSSC-7B11),Mouse,IgG2b,kappa,27-35,N,Y,PBMC,Coated CD3 free CD28,48H,PBMC,Human,NA,15.6,0.25,ug/test,GARP+CD4+ stim PBMC,1-20,,,,,,,,,,,Y,CD4,RPA-T4,NA,A647,,,,,,Another costaining with FoxP3 may be used in conjugation with CD4 to gate on FoxP3+ in CD4+ as a positive test,
+human,CD366,TIM-3,7D3,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,10,0.5,ug/test,CD56+TIM-3+ LWB-L,30-95,LWB-M,30-100,,,LWB-G,0-10,,,,,N,NA,N,NA,NA,,,,,,"for analysis, gate on CD56+ and analyze by histogram for positive target",
+mouse,CD278,ICOS,7E.17G9,Rat,IgG2b,kappa,"A95-1, R35-38",N,Y,BALB/c stimulated,CD3,48-72H,Spleen ,Mouse,Balb/c,8.9,0.5,ug/test,CD3 stimulated BALB/c spleen,35-70,,,,,BALB/c Spleen,0-10,,,,,N,NA,NA,NA,NA,,,,,,"Fc Block, 7AAD",
+human,CD123,IL3RA,7G3,Mouse,IgG2a,kappa,G155-178,Y,N,NA,NA,NA,Cell line ,Hamster,Chinese,16,0.5,ug/test,CHO-hu IL3Ralpha,80-100,,,,,CHO-hu GM-CSF CSFR beta,0-10,,,,,N,NA,NA,NA,NA,,,,,,"PosTest: Balb/c spl B220(clone RA3-6B2) +subset: 70-100%, NegTest: Balb/c spl B220(clone RA3-6B2) -subset: 0-10% , Comment: CNR11726",
+Mouse,CD21/CD35,CR2/CR1,7G6,Rat,IgG2b,kappa,A95-1,N,N,NA,NA,NA,Spleen ,Mouse,Balb/c,20.9,0.03,ug/test,B220+ subset,70-100,,,,,B220- subset ,0-10,,,,,Y,CD45R/B220,RA3-6B2,NA,APC,,,,,,,
+human,,ASGPR 1,8D7,Mouse,IgG1,kappa,X40,Y,N,NA,NA,NA,Cell line ,Human,NA,69.5,1,ug/test,HEPG2 cell line,90-100,,,,,Jurkat cell line,0-10,,,,,N,NA,NA,NA,NA,,,,,,No entry in the Clone model System 053119 v1 master v3 file.,
+human,CD34,,8G12 (also known as HPCA2),Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,PBMC,Human,NA,125,0.5,ug/test,PBMC vs CD14,,,,,,PBMC vs CD14,,,,,,Y,CD14,H5,NA,APC,,,,,,No entry in the Clone model System 053119 v1 master v3 file. No values for pos and neg on the LEGO DUPLO ppt,
+mouse,CD38,ADP-ribosyl cyclase 1,90/CD38 (also known as Ab90),Rat,IgG2a,kappa,R35-95,N,N,NA,NA,NA,Spleen ,Mouse,Balb/c,8,0.125,ug/test,CD3- subset spleen,90-100,,,,,CD3+ subset spleen,15-35,,,,,Y,CD3e,145-2C11,NA,APC,,,,,,"Fc Block, 7AAD",
+human,CD335,NKp46,9E2/NKp46 (also known as 9-E2),Mouse,IgG1,kappa,X40,N,N,NA,NA,NA,LWB,Human,NA,5.3,0.25,ug/test,LWB-L,,,,,,LWB-M,,LWB-G,,,,N,NA,NA,NA,NA,,,,,,"No LEGO/DUPLO data available, No values for pos and neg available",
+human,CD49d,intergin alpha4 chain,9F10,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,60,0.5,ug/test,LWB-L,60-100,LWB-M,50-100,,,LWB-G,0-70,,,,,Y,CD14,M5E2,NA,APC,,,,,,positive on eosinophils.,
+human,CD123,,9F5,Mouse,IgG1,kappa,G155-178,Y,N,CHO-hu IL3R alpha ?,CHO-hu GM-CSFR beta ?,NA,Cell line ,Hamster,NA,15.5,1,ug/test,CHO-hu IL3R alpha ?,80-100,NA,NA,NA,NA,CHO-hu GM-CSFR beta ?,0-10,NA,NA,NA,NA,N,NA,NA,NA,NA,,,,,,,
+,,,A1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+mouse,CD45.1,Ly-5,A20,Mouse,IgG2a,kappa,G155-178,Y,N,NA,NA,N/A,Spleen ,Mouse,"SJL, B6",294,0.5,ug/test,SJL Spleen,95-100%,NA,NA,NA,NA,B6 Spleen,0-10%,NA,NA,NA,NA,N,NA,NA,NA,NA,,,,,,,
+human,CD91,A2MR,A2MR-?2,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,471,0.125,ug/test,LWB-M,20-100%,NA,NA,NA,NA,LWB-L,0-5%,LWB-G,0-5%,NA,NA,Y,CD14,M5E2,0.125,APC,,,,,,,
+human,CD89,IgA Fc receptor,A59,Mouse,IgG1,kappa,"X40, MOPC-21",N,N,NA,NA,NA,LWB,Human,NA,71.4,0.5,ug/test,LWB-M,80-100%,LWB-G,90-100%,NA,NA,LWB-L,0-10%,NA,NA,NA,NA,NA,NA,NA,NA,NA,,,,,,,
+mouse,,IgG1,A85-1,Rat,IgG1,kappa,R3-34,Y,N,NA,NA,NA,Spleen ,Mouse,Balb/c,100.2,0.06,ug/test,CD22.2 (Purified) Primary Ab stained BALB/C Spleenocytes,40-90%,NA,NA,NA,NA,BALB/C Spleen,0-10%,NA,NA,NA,NA,NA,NA,NA,NA,NA,,,,,,,
+mouse,CD93,Aa4,AA4.1,Rat,IgG2b,kappa,A95-1,N,N,NA,NA,NA,Bone Marrow ,Mouse,B6,46,0.5,ug/test,B6 BM B220+ subset,40-100%,NA,NA,NA,NA,B6 BM B220- subset,0-10%,NA,NA,NA,NA,NA,B220,RA3-6B2,0.5,FITC,,,,,,,
+,,,AC1.2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,ACT35 (also known as Ber-ACT35),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,AD2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,"AER-37 (also known as CRA-1, CRA1)",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,AF6-88.5,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,AK-7 (also known as AK7),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,APA5,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,B1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,B1.1/CD66,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,B20.1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,B3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,B3B4,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,B6,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,B6.2/CD66,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,B6H12,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,B73.1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,BB7.2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,Ber-ACT8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,BerH8 (also known as Ber-H8),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,BM16,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,BP-1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,BU63,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,C10-1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,C2 (also known as C2F2),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,C34-3448,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,C40-1457,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,C65-485,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,C9B7W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,CD1d42 (also known as 42.1),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,CH-L,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,CW10,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,CXCR3-173,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,D058-1283,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,D53-1473,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,D7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,DATK32,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,DREG-56,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,DT-9 (also known as DT9),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,DTA-1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,DX11,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,DX26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,DX27,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,DX29,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,E11,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,E13-161.7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,E50-2440,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,EBA-1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,EH12.1 (also known as EH12),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,F10/21A3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,FIB504,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,FLI8.26 (also known as 8.26),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,FN50 (also known as FN 50),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,FR70,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,G18-145,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,G20-127,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,G20-193,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,G44-26 (also known as C26),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,G46-2.6,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,G46-6,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,G8.8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,GA-R2 (HIR2),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,GIR-208,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,GK1.5,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,GL1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,GL3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,GR20,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,H1.2F3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,H194-112,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,H35-17.2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,H57-597,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,H5C6,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,Ha31/8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HA58,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HB15e,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HB7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HI100,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HI10a,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HIB22,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,hIL4R-M57,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HIL-7R-M21,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HIM3-4,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HIP1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HIP8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HIS24,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HIT3a,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HL3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HLy9.1.25,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HM ?1-1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HM48-1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HM?2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HP-3D9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,HP-3G10,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,IA10,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,IA6-2 (also known as ?-IA6-2),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,ICRF44 (also known as 44),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,II/41,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,IM7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,IP26 (also known as IP26A),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,J168-540,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,J43,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,JDC-12,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,JM7A4 (also known as 7A4),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,Jo2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,JOVI.1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L01.1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L106,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L128,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L133.1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L138 (also known as Leu-M7),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L17F12,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L272,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L293,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L303.1 (also known as L303),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L306.4,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L307.4 (also known as L307),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,L60,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,LB-2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,LG.3A10,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,LN2 (also known as LN-2),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,LS132.1D9 (also known as 1D9),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M1/69,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M1/70,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M17/4,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M5/114.15.2 (also known as M5/114),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M-A251,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M-A261,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M-A712,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MABTNFR1-B1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M-B371,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MD22,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,ME-9F1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MEC 13.3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MEL-14,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MI15,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MIH1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MIH18,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MIH4,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MIH5,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,Mik-?3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MJ7/18,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,ML5,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MR1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MRC OX-104,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M-T477,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M-T701,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MWReg30,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,MY31,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,M?P9 (also known as M?P-9),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,N418,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,NCAM16.2 (also known as NCAM 16),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,NEU 24.7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,NOK-1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OKT3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-33,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-35,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-38,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-39,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-41,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-42,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-6,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-62,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-7 (also known as OX7),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,OX-86,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,P1H12,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,p282 (H19),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,p30-15,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,p44-8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,P84,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,PK136,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,PO3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,R1-2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,R12-3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,R139,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,R19-15,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,R19-760,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,R2-40,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,R26-46,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,R40-82,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,R6-60.2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,RA3-6B2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,RB6-8C5,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,RF8B2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,RIK-2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,RM4-4,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,RM4-5,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,rmC5-3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,RMP1-30,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,RMV-7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,RPA-2.10,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,RUU-PL7F12,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,S5.2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,S7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,SF1-1.1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,SJ25C1 (also known as SJ25-C1),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,SK11 (also known as Anti-Leu-8),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,SK7 (also known as Leu-4),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,SKII.4,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,SR84,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,T21,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,T38-320,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,T45-2342,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,T47-530,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,TER-119,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,TM-?1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,TRAP1 (also known as TRAP-1),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,TÜ12,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,Tu39 (also known as TÜ39),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,"TU66 (also known as Tü 66, Tü66)",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,TUGh4,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,TX24,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,TY25,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,U21-1283,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,U23-56,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,U29-93,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,UCHL1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,V24-785,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,V27-580,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,V65,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,V7.1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,VIM5 (also known as VIM-5),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,VI-PL2 (also known as VIPL2),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,W6B3C1 (also known as W6B3),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,WM53 (also known as WM-53),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,WM59 (also known as WM-59),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,X54-5/7.1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,X56,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,YB5.B8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,ZM3.8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,?R1 (also known as Alpha-R1),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

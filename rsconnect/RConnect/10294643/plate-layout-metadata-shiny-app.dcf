@@ -1,0 +1,13 @@
+name: plate-layout-metadata-shiny-app
+title: plate-layout-metadata-shiny-app
+username: 10294643
+account: 10294643
+server: RConnect
+hostUrl: https://bdstattools.bdx.com:3939/__api__
+appId: 94
+bundleId: 832
+url: https://bdstattools.bdx.com:3939/bdb-metadata-file-shiny-app/
+when: 1622592505.32501
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|bv421_db_temp.xlsx|bv421_db_test_clean.csv|bv421_db_test_clean.xlsx|testing.csv
