@@ -149,12 +149,12 @@ ui <- tagList(
                                    actionButton("save_plate_per_row_data_button", "Save Results", class = "btn-primary", icon("save"), style="color: #fff"),
                                    actionButton("preview_metadata_outline_button", "Preview Table", class = "btn-primary", icon("eye"), style="color: #fff"),
                                    downloadButton('download_plate_layout', "Download Plate Layout", class = "btn-primary"),
-                                   downloadButton("download_metadata_outline_file", "Download Metadata Outline", class = "btn-primary", style="color: #fff"),
-                                   helpText("Download will be available after you have updated the table and saved your data."),
+                                   actionButton("download_metadata_outline_file", "Save Metadata Outline", class = "btn-primary", style="color: #fff"),
+                                   helpText("Save option will be available after you have updated the table and saved your data."),
                                    br(),
                                    br(),
                                    uiOutput('titrations_missing_bottom_msg'),
-                                   textOutput("data_saved_text_tab1") %>%
+                                   htmlOutput("data_saved_text_tab1") %>%
                                        tagAppendAttributes(style= 'color:#2A7BE1; font-size: 20px; font-weight: bold;'),
                                    conditionalPanel(condition = "((input.save < 1) && (input.preview >= 1)) | ((input.save < 1) && (input.download_metadata_outline_file >= 1))",
                                                     textOutput('error_msg') %>% # error message shown if preview table w/o saving
@@ -169,8 +169,7 @@ ui <- tagList(
                                           $("#download_metadata_outline_file").attr("disabled", "true").attr("onclick", "return false;");
 
                                           Shiny.addCustomMessageHandler("download_metadata_outline_ready", function(message) {
-                                            $("#download_metadata_outline_file").removeAttr("disabled").removeAttr("onclick").html(
-                                              "<i class=\\"fa fa-download\\"></i>Download Metadata Outline");
+                                            $("#download_metadata_outline_file").removeAttr("disabled").removeAttr("onclick");
                                                 console.log(message);
                                           });
                                         })
@@ -183,10 +182,9 @@ ui <- tagList(
         tabPanel('Run OMIQ',
                  sidebarPanel(
                      fluidRow(
-                             fluidRow(column(12,
-                                             fileInput("metadata_upload", "Upload Metadata Outline CSV*", multiple=FALSE, icon("upload")))
-                                      ),
-
+                             # fluidRow(column(12,
+                             #                 fileInput("metadata_upload", "Upload Metadata Outline CSV*", multiple=FALSE, icon("upload")))
+                             #          ),
                              fluidRow(column(8,textInput("donor_id", "Donor ID", value = 'NA'))),
                              fluidRow(
                                  column(6,selectizeInput("cytometer", "Cytometer*", choices = unique(cytometer_list$Nickname), options=list(create=TRUE))),
@@ -194,7 +192,7 @@ ui <- tagList(
                              fluidRow(column(12, textAreaInput("notes", "Notes", placeholder="Add any notes regarding your experiment.", height="100px"))),
                              fluidRow(column(12,p(em(h6('* indicates required field'))))),
                              fluidRow(column(6,actionButton("save_final_metadata_button", "Save Data", icon("save"), class="btn-primary"))),
-                             fluidRow(column(6,textOutput("saved_final") %>%
+                             fluidRow(column(6,htmlOutput("saved_final") %>%
                                  tagAppendAttributes(style= 'color:#2A7BE1; font-size: 20px; font-weight: bold;'))
 
                              )

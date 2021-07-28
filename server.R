@@ -1015,14 +1015,14 @@ server = function(input, output, session) {
 
   })
   ## Download plate layout (by row) to xlsx file
-  output$download_plate_layout <- downloadHandler(
-    filename = function() {
-      paste(input$plate_id,"-plate_layout.xlsx", sep="")
-    },
-    content = function(file) {
-      writexl::write_xlsx(saved_plate_per_row_data(), file)
-    }
-  )
+  # output$download_plate_layout <- downloadHandler(
+  #   filename = function() {
+  #     paste(input$plate_id,"-plate_layout.xlsx", sep="")
+  #   },
+  #   content = function(file) {
+  #     writexl::write_xlsx(saved_plate_per_row_data(), file)
+  #   }
+  # )
 
   ###################################### STEP 6: Download metadata outline file #########################################
 
@@ -1049,14 +1049,24 @@ server = function(input, output, session) {
 
 
   ## Download metadata outline csv file
-  output$download_metadata_outline_file <- downloadHandler(
-    filename = function() {
-      paste(input$plate_id,"-metadata-outline.csv", sep="")
-    },
-    content = function(file) {
-      write_csv(final_metadata_outline_from_inputs(), file)
-    }
-  )
+  # output$download_metadata_outline_file <- downloadHandler(
+  #   filename = function() {
+  #     paste(input$plate_id,"-metadata-outline.csv", sep="")
+  #   },
+  #   content = function(file) {
+  #     write_csv(final_metadata_outline_from_inputs(), file)
+  #   }
+  # )
+
+  observeEvent(input$download_metadata_outline_file, {
+    path_exp <- file.path(datadump,
+                          input$plate_id,
+                          paste0(input$plate_id,"-metadata-outline.csv"))
+    write_csv(final_metadata_outline_from_inputs(), path_exp)
+    msg = paste('Data saved to:', path_exp)
+    message(msg)
+    observe(output$data_saved_text_tab1 <- renderText(HTML(msg)))
+  })
 
   ############################################ ------------ RUN OMIQ TAB --------- #########################################
 
@@ -1065,28 +1075,28 @@ server = function(input, output, session) {
 
   ## Read in uploaded metadata outline
   uploaded_metadata_outline <- eventReactive(input$save_final_metadata_button, {
-    readr::read_csv(input$metadata_upload$datapath)
+    readr::read_csv(file.path(datadump, input$plate_id, paste0(input$plate_id,"-metadata-outline.csv")))
   })
 
   ###################################### STEP 2: Map fcs filenames to well IDs in metadata outline #########################################
 
   ## If "Save" button clicked, get and return names of uploaded fcs files
-  uploaded_fcs_filenames <- eventReactive(input$save_final_metadata_button, {
+  # uploaded_fcs_filenames <- eventReactive(input$save_final_metadata_button, {
 
-    # if neither fcs files are uploaded, nor is default selected
-    if(is.null(input$fcs_files_upload) & !input$default_fcs_files){
-      return(rep(NA,96))
-    }
-    # if no files are uploaded and default selected
-    else if(is.null(input$fcs_files_upload) & input$default_fcs_files){
-      file_inputs <- default_fcs_filenames
-    }
-    # otherwise, whatever is uploaded will be used (even if default is selected)
-    else{
-      file_inputs <- input$fcs_files_upload$name
-    }
-    return(file_inputs)
-  })
+  #   # if neither fcs files are uploaded, nor is default selected
+  #   if(is.null(input$fcs_files_upload) & !input$default_fcs_files){
+  #     return(rep(NA,96))
+  #   }
+  #   # if no files are uploaded and default selected
+  #   else if(is.null(input$fcs_files_upload) & input$default_fcs_files){
+  #     file_inputs <- default_fcs_filenames
+  #   }
+  #   # otherwise, whatever is uploaded will be used (even if default is selected)
+  #   else{
+  #     file_inputs <- input$fcs_files_upload$name
+  #   }
+  #   return(file_inputs)
+  # })
 
   mapped_fcs_files <- eventReactive(input$pushData,{
     inFile <- input$metadata_upload
@@ -1142,6 +1152,7 @@ server = function(input, output, session) {
   ############ OMIQ Main Panel - Configured with Airflow & Docker Container #############
 
   observeEvent(input$pushData, {
+    readr::read_csv(input$metadata_upload$datapath)
 
     folder_dir <- plate_id_input()
     path_exp <- file.path(datadump, folder_dir)
