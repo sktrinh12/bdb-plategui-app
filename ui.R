@@ -185,6 +185,7 @@ ui <- tagList(
                              # fluidRow(column(12,
                              #                 fileInput("metadata_upload", "Upload Metadata Outline CSV*", multiple=FALSE, icon("upload")))
                              #          ),
+                             fluidRow(column(8,textInput("plate_id_omiq", "Plate ID*", placeholder="YYYYMMDD-INITIALS-PLATE#"))),
                              fluidRow(column(8,textInput("donor_id", "Donor ID", value = 'NA'))),
                              fluidRow(
                                  column(6,selectizeInput("cytometer", "Cytometer*", choices = unique(cytometer_list$Nickname), options=list(create=TRUE))),

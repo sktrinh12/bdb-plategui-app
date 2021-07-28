@@ -1075,7 +1075,7 @@ server = function(input, output, session) {
 
   ## Read in uploaded metadata outline
   uploaded_metadata_outline <- eventReactive(input$save_final_metadata_button, {
-    readr::read_csv(file.path(datadump, input$plate_id, paste0(input$plate_id,"-metadata-outline.csv")))
+    readr::read_csv(file.path(datadump, input$plate_id_omiq, paste0(input$plate_id_omiq,"-metadata-outline.csv")))
   })
 
   ###################################### STEP 2: Map fcs filenames to well IDs in metadata outline #########################################
@@ -1099,11 +1099,12 @@ server = function(input, output, session) {
   # })
 
   mapped_fcs_files <- eventReactive(input$pushData,{
-    inFile <- input$metadata_upload
-    if (is.null(inFile))
-      return(NULL)
-    fcs_filenames <- list.files(file.path(datadump, plate_id_input()), pattern = "*.fcs")
-    map_fcs_filenames(fcs_filenames, inFile$datapath)
+    # inFile <- input$metadata_upload
+    # if (is.null(inFile))
+    #   return(NULL)
+    fcs_filenames <- list.files(file.path(datadump, input$plate_id_omiq), pattern = "*.fcs$")
+    message(paste0('number of fcs files: ', length(fcs_filenames)))
+    map_fcs_filenames(fcs_filenames, file.path(datadump, input$plate_id_omiq, paste0(input$plate_id_omiq, "-metadata-outline.csv")))
   })
   ###################################### STEP 3: Create table for parameters inputs #########################################
 
@@ -1146,15 +1147,16 @@ server = function(input, output, session) {
   plate_id_input <- reactive({ input$plate_id})
 
   # FINAL Metadata table for OMIQ
-  final_metadata_table_for_omiq <- reactive({ merge_metadata_for_OMIQ(mapped_fcs_files()$Filename, uploaded_metadata_outline(), input$plate_id, input$stain_date, input$donor_id, input$cytometer, parameters_obj(), input$notes, input$experiment_type) })
+  final_metadata_table_for_omiq <- reactive({ merge_metadata_for_OMIQ(mapped_fcs_files()$Filename, uploaded_metadata_outline(), input$plate_id_omiq, input$donor_id, input$cytometer, parameters_obj(), input$notes) })
 
 
   ############ OMIQ Main Panel - Configured with Airflow & Docker Container #############
 
   observeEvent(input$pushData, {
-    readr::read_csv(input$metadata_upload$datapath)
+    # readr::read_csv(input$metadata_upload$datapath)
 
-    folder_dir <- plate_id_input()
+    folder_dir <- input$plate_id_omiq
+    message(folder_dir)
     path_exp <- file.path(datadump, folder_dir)
     path_run_params <- file.path(path_exp, "run-params")
     dir.create(path_run_params, showWarnings = FALSE)
