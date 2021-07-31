@@ -1,4 +1,4 @@
-FROM reg_shiny_base:latest 
+FROM reg_shiny_base:latest
 
 ENV APP_HOME "/home/bdb"
 
@@ -10,10 +10,9 @@ RUN useradd -m -d $APP_HOME bdb \
   && chown -R bdb:bdb $APP_HOME \
   && echo bdb:bdb | chpasswd
 
-COPY . .
+COPY . $APP_HOME/app
 
 # change ownership to UNAME
-USER root
 RUN chown -R $UNAME:$UNAME $APP_HOME
 
 COPY install_pkgs.R .
