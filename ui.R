@@ -76,18 +76,19 @@ ui <- tagList(
                               fluidRow(div(style = 'overflow-x: scroll;',
                               # fluidRow(
                                   div(style = "display: grid; grid-template-columns: auto; padding: 5px;",
-                                      textInput("plate_id", "Plate ID*", placeholder="YYYYMMDD-INITIALS-PLATE#")
+                                      textInput("plate_id", "Plate ID*", placeholder="YYYYMMDD-INITIALS-PLATE#", value = "20210319-RB-FY21w5p8")
                                       ), # will be used in default name of downloaded file
                                   div(style = "display: grid; grid-template-columns: 170px 170px 170px; grid-template-rows: auto; padding: 5px;",
-                                      div(style = "text-align: left; padding: 5px",
-                                          textInput("cst_lot_number", "CS&T Beads Lot #", placeholder="Ex. 123456")
-                                      ),
+                                      # div(style = "text-align: left; padding: 5px",
+                                      #     textInput("cst_lot_number", "CS&T Beads Lot #", placeholder="Ex. 123456")
+                                      # ),
                                       div(style = "text-align: left; padding: 5px",
                                           dateInput("prep_date", "Prep Date")
+                                      )
                                       ),
-                                      div(style = "text-align: left; padding: 5px",
-                                          dateInput("stain_date", "Stain Date")
-                                      )),
+                                      # div(style = "text-align: left; padding: 5px",
+                                      #     dateInput("run_date", "Run Date")
+                                      # )),
                                   div(style = "display: grid; grid-template-columns: 170px auto; grid-template-rows: auto; padding: 5px;",
                                       div(style = "text-align: left; padding: 5px",
                                           selectInput('experiment_type', 'Experiment Type*', choices = experiment_type_list, selected='S')
@@ -143,6 +144,7 @@ ui <- tagList(
                      tags$head(
                          tags$link(rel = "stylesheet", type = "text/css", href = "custom.css") # custom css found in www/custom.css file
                      ),
+                     tags$head(tags$script(src = 'app.js')),
                      uiOutput('main_panel_ui'),
                      fluidRow(
                          wellPanel(width = 12, status = "success", solidHeader = TRUE, title = "Generate Metadata CSV",
@@ -187,24 +189,28 @@ ui <- tagList(
                              #          ),
                              fluidRow(column(8,textInput("plate_id_omiq", "Plate ID*", placeholder="YYYYMMDD-INITIALS-PLATE#"))),
                              fluidRow(column(8,textInput("donor_id", "Donor ID", value = 'NA'))),
-                             fluidRow(
-                                 column(6,selectizeInput("cytometer", "Cytometer*", choices = unique(cytometer_list$Nickname), options=list(create=TRUE))),
-                                 column(6,rHandsontableOutput("parameters_table"))),
+                             # fluidRow(
+                             #     column(6,selectizeInput("cytometer", "Cytometer*", choices = unique(cytometer_list$Nickname), options=list(create=TRUE))),
+                             #     column(6,rHandsontableOutput("parameters_table"))),
                              fluidRow(column(12, textAreaInput("notes", "Notes", placeholder="Add any notes regarding your experiment.", height="100px"))),
                              fluidRow(column(12,p(em(h6('* indicates required field'))))),
                              fluidRow(column(6,actionButton("save_final_metadata_button", "Save Data", icon("save"), class="btn-primary"))),
-                             fluidRow(column(6,htmlOutput("saved_final") %>%
+                             # fluidRow(column(6,htmlOutput("saved_final") %>%
+                             #     tagAppendAttributes(style= 'color:#2A7BE1; font-size: 20px; font-weight: bold;'))
+                             # )
+                             fluidRow(column(6,uiOutput("saved_final") %>%
                                  tagAppendAttributes(style= 'color:#2A7BE1; font-size: 20px; font-weight: bold;'))
 
                              )
                          )
                  ),
                  mainPanel(
-                     div(style="color: #B2B6BB;",h3(em("Feature below is currently disabled. Coming soon."))),
-                     br(),
+                     # div(style="color: #B2B6BB;",h3(em("Feature below is currently disabled. Coming soon."))),
+                     # br(),
                      # button to push to R-OMIQ
                      actionButton('pushData', 'Push Metadata to OMIQ', class="btn-primary"),
                      actionButton('rerun', 'Re-run', class="btn-primary"),
+                     actionButton('stop', 'Stop', class="btn-danger"),
                      uiOutput('airflow_response'),
                      br(),
                      fluidRow(
@@ -223,7 +229,13 @@ ui <- tagList(
                          column(OMIQ_COLUMN, colourpicker::colourInput('col3', 'Pop3 colour', "#2983ffff")),
                          width=12),
                      hr(),
-                     sliderInput("biexSlider", label = h3("biex value"), min = -1000, max = -1, value = -300)
+                     sliderInput("biexSlider", label = h3("biex value"), min = -1000, max = -1, value = -300),
+                     br(),
+                     div(style="color: #2A7BE1;",h4(em("Log output"))),
+                     fluidRow(
+                              wellPanel(column(12, uiOutput("log_output")))
+                     )
+
                  )))
 )
 
