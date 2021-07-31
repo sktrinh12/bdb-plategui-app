@@ -5,6 +5,8 @@ server = function(input, output, session) {
   options(readr.num_columns = 0) # to disable from printing column specs for readr-based tables
   options(readxl.num_columns = 0)
   VM = "10.29.128.4" # VM with Docker Container
+  stats_file <- "all_stats.csv" # file name to search when complete
+  pollTimer <- 15000 # poll every 15 seconds
 
   ## check azure file disk 'datadump' for testing locally and production
 
@@ -13,6 +15,7 @@ server = function(input, output, session) {
     datadump = "Z:/data"
   }
 
+  datalogs = file.path(dirname(datadump), "logs", "r_dag", "omiq_pipeline")
 
   ######################## Inputted files - need to be used as "pin" in RStudio Connect ################################
   BV421_DF <- readxl::read_xlsx("bv421_test.xlsx") # copy of BV421 DB Excel being referenced (temporary)
@@ -598,12 +601,12 @@ server = function(input, output, session) {
       metadata_headers_and_wellids(),
       input$plate_id,
       as.character(input$prep_date),
-      as.character(input$stain_date),
+      # as.character(input$stain_date),
       input$experiment_type,
       input$sample_type,
       input$sample_species,
       input$sample_strain,
-      input$cst_lot_number
+      # input$cst_lot_number
     )
   })
 
@@ -949,14 +952,14 @@ server = function(input, output, session) {
           metadata_headers_and_wellids(),
           input$plate_id,
           as.character(input$prep_date),
-          as.character(input$stain_date),
+          # as.character(input$stain_date),
           input$experiment_type,
           titrationsList(),
           input$units,
           input$sample_type,
           input$sample_species,
           input$sample_strain,
-          input$cst_lot_number,
+          # input$cst_lot_number,
           gating_control_from_table(),
           input$use_custom_gating
         )
@@ -967,14 +970,14 @@ server = function(input, output, session) {
           metadata_headers_and_wellids(),
           input$plate_id,
           as.character(input$prep_date),
-          as.character(input$stain_date),
+          # as.character(input$stain_date),
           input$experiment_type,
           titrationsList(),
           input$units,
           input$sample_type,
           input$sample_species,
           input$sample_strain,
-          input$cst_lot_number,
+          # input$cst_lot_number,
           c(NA),
           FALSE
         )
@@ -1109,36 +1112,42 @@ server = function(input, output, session) {
   ###################################### STEP 3: Create table for parameters inputs #########################################
 
   ## Dropdown list of parameters conditional on cytometer selected
-  parameters_list <- reactive({
-    filtered_df <- filter(cytometer_list, Nickname == input$cytometer)
-    return(sort(filtered_df$Detector))
+  # parameters_list <- reactive({
+  #   filtered_df <- filter(cytometer_list, Nickname == input$cytometer)
+  #   return(sort(filtered_df$Detector))
 
-  })
+  # })
 
   ## Create table of parameters with dropdowns from parameters_list
-  output$parameters_table <- renderRHandsontable({
-    rhandsontable(
-      data.frame("Parameter" = rep(NA_character_, 8)),
-      rowHeaders = c(paste("Row", LETTERS[1:8])),
-      rowHeaderWidth = 100
-    ) %>%
-      hot_col(col = "Parameter",
-              type = "dropdown",
-              source = parameters_list()) %>%
-      hot_col(1, width = 100)
-  })
+  # output$parameters_table <- renderRHandsontable({
+  #   rhandsontable(
+  #     data.frame("Parameter" = rep(NA_character_, 8)),
+  #     rowHeaders = c(paste("Row", LETTERS[1:8])),
+  #     rowHeaderWidth = 100
+  #   ) %>%
+  #     hot_col(col = "Parameter",
+  #             type = "dropdown",
+  #             source = parameters_list()) %>%
+  #     hot_col(1, width = 100)
+  # })
 
   ## Convert parameters table to R object to input to finalized metadata function
-  parameters_obj <- eventReactive(input$save_final_metadata_button, {
-    if (!is.null(input$parameters_table))
-      return(data.frame(hot_to_r(input$parameters_table), stringsAsFactors = FALSE))
-  })
+  # parameters_obj <- eventReactive(input$save_final_metadata_button, {
+  #   if (!is.null(input$parameters_table))
+  #     return(data.frame(hot_to_r(input$parameters_table), stringsAsFactors = FALSE))
+  # })
 
   ###################################### STEP 4: Save data and download to final metadata csv #########################################
 
   ## Outputs text to UI indicating that data was saved
+  ui_status <- reactiveValues(text = 'Idle')
+  output$saved_final <- renderUI(
+      h4(paste0('STATUS: ', ui_status$text), style="color:blue;")
+      )
+
   observeEvent(input$save_final_metadata_button, {
-    output$saved_final <- renderText('Data Saved!')
+    # output$saved_final <- renderText('Data Saved!')
+    ui_status$text <- 'Data Saved!'
   })
 
 
@@ -1146,14 +1155,28 @@ server = function(input, output, session) {
   #plate_id_input <- reactive({ readr::read_csv(input$metadata_upload$datapath)$`Plate ID`[[1]] })
   plate_id_input <- reactive({ input$plate_id})
 
+
   # FINAL Metadata table for OMIQ
-  final_metadata_table_for_omiq <- reactive({ merge_metadata_for_OMIQ(mapped_fcs_files()$Filename, uploaded_metadata_outline(), input$plate_id_omiq, input$donor_id, input$cytometer, parameters_obj(), input$notes) })
+  # final_metadata_table_for_omiq <- reactive({ merge_metadata_for_OMIQ(mapped_fcs_files()$Filename, uploaded_metadata_outline(), input$plate_id_omiq, input$donor_id, input$cytometer, parameters_obj(), input$notes) })
+  final_metadata_table_for_omiq <- reactive({
+                                    merge_metadata_for_OMIQ(file.path(datadump, input$plate_id_omiq),
+                                      mapped_fcs_files()$Filename,
+                                      uploaded_metadata_outline(),
+                                      input$donor_id,
+                                      input$notes)
+                                })
 
 
   ############ OMIQ Main Panel - Configured with Airflow & Docker Container #############
 
   observeEvent(input$pushData, {
-    # readr::read_csv(input$metadata_upload$datapath)
+
+    ui_status$text <- 'Running...'
+    session$sendCustomMessage('disableButton', 'pushData')
+    session$sendCustomMessage('disableButton', 'rerun')
+    session$sendCustomMessage('btnAppear', 'stop')
+    session$sendCustomMessage('addClass', message = list(id = 'buttonload', btn = 'pushData'))
+
 
     folder_dir <- input$plate_id_omiq
     message(folder_dir)
@@ -1204,15 +1227,13 @@ server = function(input, output, session) {
 
   # Call Airflow
 
-  expid_dir = folder_dir
-
   current_time = Sys.time()
-  dag_run_id = paste0(folder_dir, "_", current_time)
+  dag_run_id = paste0(folder_dir, "_", format(current_time, "%Y-%m-%dT%H_%M_%S"))
   attr(current_time, "tzone") <- "UTC"
   current_time <- format(current_time, '%Y-%m-%dT%H:%M:%SZ')
   print(paste("current UTC time:", current_time))
 
-  body <- list(conf=list(EXP_ID=expid_dir), dag_run_id=dag_run_id, execution_date=current_time)
+  body <- list(conf=list(EXP_ID=folder_dir), dag_run_id=dag_run_id, execution_date=current_time)
   link <- paste0("http://", VM, ":8000/api/v1/dags/r_dag/dagRuns")
   res <- httr::POST(url = link,
                     config = authenticate("airflow", "airflow"),
@@ -1222,9 +1243,51 @@ server = function(input, output, session) {
 
   # Output response to UI
   save_string_result <- content(res, "parsed")
+  session$sendCustomMessage(type = "msgbox",
+                            message = paste0("status: ", as.character(save_string_result$state)))
   output$airflow_response <- renderUI({
     save_string_result
   })
+
+  check_log <- reactive({
+    invalidateLater(85000, session) # ~1.3 mins
+    ct <- paste0(substr(current_time, 1, nchar(current_time)-1), "+00:00")
+    raw_text <- readLines(file.path(datalogs, ct, "1.log"))
+    return(raw_text)
+  })
+
+  output$log_output <- renderUI({
+    check_log()
+  })
+
+  # reactivePoll check - check rest API every 15 seconds
+  observe({
+         # if (length(list.files(path = file.path(datadump, input$plate_id_omiq),
+         #                       pattern = stats_file)) > 0) {
+         if (GET_airflow(VM, dag_run_id)$state == "success" | ui_status$text[1] == "S") {
+              session$sendCustomMessage('enableButton', 'pushData')
+              session$sendCustomMessage('enableButton', 'rerun')
+              session$sendCustomMessage('removeClass', 'pushData')
+              session$sendCustomMessage('btnDisappear', 'stop')
+              ui_status$text <- paste0('OMIQ pipeline completed for ', input$plate_id_omiq)
+          } else {
+              invalidateLater(pollTimer, session)
+         }
+  })
+
+  observeEvent(input$stop, {
+          ui_status$text <- "Stopped button pressed"
+          session$sendCustomMessage("enableButton", "rerun")
+          session$sendCustomMessage("enableButton", "pushData")
+          session$sendCustomMessage('btnDisappear', 'stop')
+          session$sendCustomMessage('removeClass', 'pushData')
+          session$sendCustomMessage('removeClass', 'rerun')
+          req <- DELETE_airflow(VM, dag_run_id)
+          print(paste0('status code: ', as.character(req$status)))
+          session$sendCustomMessage(type = "msgbox",
+                                    message = paste0("status detail: ", as.character(req$detail)))
+  })
+
 })
 
 }
