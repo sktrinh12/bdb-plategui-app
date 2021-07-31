@@ -1078,7 +1078,7 @@ server = function(input, output, session) {
 
   ## Read in uploaded metadata outline
   uploaded_metadata_outline <- eventReactive(input$save_final_metadata_button, {
-    readr::read_csv(file.path(datadump, input$plate_id_omiq, paste0(input$plate_id_omiq,"-metadata-outline.csv")))
+    readr::read_csv(file.path(datadump, plate_id_omiq_input(), paste0(plate_id_omiq_input(),"-metadata-outline.csv")))
   })
 
   ###################################### STEP 2: Map fcs filenames to well IDs in metadata outline #########################################
@@ -1105,9 +1105,9 @@ server = function(input, output, session) {
     # inFile <- input$metadata_upload
     # if (is.null(inFile))
     #   return(NULL)
-    fcs_filenames <- list.files(file.path(datadump, input$plate_id_omiq), pattern = "*.fcs$")
+    fcs_filenames <- list.files(file.path(datadump, plate_id_omiq_input()), pattern = "*.fcs$")
     message(paste0('number of fcs files: ', length(fcs_filenames)))
-    map_fcs_filenames(fcs_filenames, file.path(datadump, input$plate_id_omiq, paste0(input$plate_id_omiq, "-metadata-outline.csv")))
+    map_fcs_filenames(fcs_filenames, file.path(datadump, plate_id_omiq_input(), paste0(plate_id_omiq_input(), "-metadata-outline.csv")))
   })
   ###################################### STEP 3: Create table for parameters inputs #########################################
 
@@ -1155,11 +1155,13 @@ server = function(input, output, session) {
   #plate_id_input <- reactive({ readr::read_csv(input$metadata_upload$datapath)$`Plate ID`[[1]] })
   plate_id_input <- reactive({ input$plate_id})
 
+  plate_id_omiq_input <- reactive({ input$plate_id_omiq})
+
 
   # FINAL Metadata table for OMIQ
   # final_metadata_table_for_omiq <- reactive({ merge_metadata_for_OMIQ(mapped_fcs_files()$Filename, uploaded_metadata_outline(), input$plate_id_omiq, input$donor_id, input$cytometer, parameters_obj(), input$notes) })
   final_metadata_table_for_omiq <- reactive({
-                                    merge_metadata_for_OMIQ(file.path(datadump, input$plate_id_omiq),
+                                    merge_metadata_for_OMIQ(file.path(datadump, plate_id_omiq_input()),
                                       mapped_fcs_files()$Filename,
                                       uploaded_metadata_outline(),
                                       input$donor_id,
@@ -1178,7 +1180,7 @@ server = function(input, output, session) {
     session$sendCustomMessage('addClass', message = list(id = 'buttonload', btn = 'pushData'))
 
 
-    folder_dir <- input$plate_id_omiq
+    folder_dir <- plate_id_omiq_input()
     message(folder_dir)
     path_exp <- file.path(datadump, folder_dir)
     path_run_params <- file.path(path_exp, "run-params")
@@ -1229,6 +1231,8 @@ server = function(input, output, session) {
 
   current_time = Sys.time()
   dag_run_id = paste0(folder_dir, "_", format(current_time, "%Y-%m-%dT%H_%M_%S"))
+  write(dag_run_id, file = file.path(datadump, plate_id_omiq_input(), "dag_run_id.txt"))
+  print(paste0("dag run id: ", dag_run_id))
   attr(current_time, "tzone") <- "UTC"
   current_time <- format(current_time, '%Y-%m-%dT%H:%M:%SZ')
   print(paste("current UTC time:", current_time))
@@ -1250,10 +1254,17 @@ server = function(input, output, session) {
   })
 
   check_log <- reactive({
-    invalidateLater(85000, session) # ~1.3 mins
+    invalidateLater(68000, session) # ~1.3 mins
     ct <- paste0(substr(current_time, 1, nchar(current_time)-1), "+00:00")
-    raw_text <- readLines(file.path(datalogs, ct, "1.log"))
-    return(raw_text)
+    fp <- file.path(datalogs, ct, "1.log")
+    tryCatch({
+      raw_text <- readLines(fp)
+      return(raw_text)
+    },
+    error = function(e) {
+          Sys.sleep(10)
+          print(paste0("Read log file error: ", e))
+    })
   })
 
   output$log_output <- renderUI({
@@ -1262,32 +1273,48 @@ server = function(input, output, session) {
 
   # reactivePoll check - check rest API every 15 seconds
   observe({
-         # if (length(list.files(path = file.path(datadump, input$plate_id_omiq),
-         #                       pattern = stats_file)) > 0) {
-         if (GET_airflow(VM, dag_run_id)$state == "success" | ui_status$text[1] == "S") {
-              session$sendCustomMessage('enableButton', 'pushData')
-              session$sendCustomMessage('enableButton', 'rerun')
-              session$sendCustomMessage('removeClass', 'pushData')
-              session$sendCustomMessage('btnDisappear', 'stop')
-              ui_status$text <- paste0('OMIQ pipeline completed for ', input$plate_id_omiq)
-          } else {
-              invalidateLater(pollTimer, session)
+      tryCatch( {
+         res <- GET_airflow(VM, dag_run_id)
+         if (res$state == "success" | ui_status$text == "Stop button pressed") {
+             session$sendCustomMessage('enableButton', 'pushData')
+             session$sendCustomMessage('enableButton', 'rerun')
+             session$sendCustomMessage('removeClass', 'pushData')
+             session$sendCustomMessage('btnDisappear', 'stop')
+             ui_status$text <- paste0('OMIQ pipeline completed for ', plate_id_omiq_input())
+         } else {
+             invalidateLater(pollTimer, session)
          }
+      },
+      error = function(e) {
+            print(paste0("GET_airflow error: ", e))
+      })
   })
 
+}) # push omiq button observeEvent
+
   observeEvent(input$stop, {
-          ui_status$text <- "Stopped button pressed"
+          ui_status$text <- "Stop button pressed"
           session$sendCustomMessage("enableButton", "rerun")
           session$sendCustomMessage("enableButton", "pushData")
           session$sendCustomMessage('btnDisappear', 'stop')
           session$sendCustomMessage('removeClass', 'pushData')
           session$sendCustomMessage('removeClass', 'rerun')
-          req <- DELETE_airflow(VM, dag_run_id)
-          print(paste0('status code: ', as.character(req$status)))
-          session$sendCustomMessage(type = "msgbox",
-                                    message = paste0("status detail: ", as.character(req$detail)))
+          fp <- file.path(datadump, plate_id_omiq_input(), "dag_run_id.txt")
+          dag_run_id <- read.csv(fp, header = F, stringsAsFactors = F)$V1
+          print(paste0("dag run id (delete): ", dag_run_id))
+          tryCatch( {
+            req <- DELETE_airflow(VM, dag_run_id)
+            print(req)
+            # print(paste0('status code: ', as.character(req$status)))
+            session$sendCustomMessage(type = "msgbox",
+                                    message = "Stopped run")
+                                    # message = paste0("status detail: ", as.character(req$detail)))
+          },
+          error = function(e) {
+            print(e)
+            session$sendCustomMessage(type = "msgbox",
+                                    message = paste("Error:", e))
+          }
+          )
   })
-
-})
-
 }
