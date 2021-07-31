@@ -663,7 +663,7 @@ plate_config_wells <- function(){
 
 
 #################### SLICE DATA ENTERED BY USER ON CLIENT SIDE AND WRITE TO NEW METADATA TIBBLE ######################
-create_metadata_table <- function(df, metadata, plate_id, prep_date, stain_date, experiment_type, titrateList, units, sample_type, sample_species, sample_strain, cst_lot_number, gating_control_list, use_gating_button){
+create_metadata_table <- function(df, metadata, plate_id, prep_date, experiment_type, titrateList, units, sample_type, sample_species, sample_strain, gating_control_list, use_gating_button){
 
     # Repeat each plate row 12 times for data for each column
     df_sliced <- df %>% slice(rep(1:n(), each=12))
@@ -680,7 +680,8 @@ create_metadata_table <- function(df, metadata, plate_id, prep_date, stain_date,
     # Write sliced data to metadata tibble
     metadata$`Plate ID` <- rep(plate_id, 96)
     metadata$`Prep Date` <- rep(prep_date, 96)
-    metadata$`Stain Date` <- rep(stain_date, 96)
+    # metadata$`Stain Date` <- rep(stain_date, 96)
+    metadata$`Run Date` <- rep(NA_character_, 96)
     metadata$`Experiment Type` <- rep(experiment_type, 96)
     metadata$`Stability Time point` <- df_sliced$Stability.Time.point
     metadata$`Gating Control` <- gating
@@ -742,7 +743,7 @@ create_metadata_table <- function(df, metadata, plate_id, prep_date, stain_date,
     "NA",
     paste(df_sliced$Optimal, df_sliced$Optimal.units))
 
-    metadata$`CS&T Beads Lot #` <- rep(cst_lot_number, 96)
+    metadata$`CS&T Beads Lot #` <- rep(NA_character_, 96)
 
     ## Changing column 1 of plate to NA for all fields because unstained and not used
     ## For final metadata creation, all fields NA for any wash columns as well
@@ -814,7 +815,9 @@ add_data_to_isotypes <- function(ab_df, iso_df, metadata, type){
     return(df_ab_iso)
 }
 
-create_metadata_lego_ui <- function(metadata, plate_id, prep_date, stain_date, experiment_type, sample_type, sample_species, sample_strain, cst_lot_number){
+# create_metadata_lego_ui <- function(metadata, plate_id, prep_date, run_date, experiment_type, sample_type, sample_species, sample_strain, cst_lot_number){
+create_metadata_lego_ui <- function(metadata, plate_id, prep_date, experiment_type, sample_type, sample_species, sample_strain){
+
 
     ## Write UI inputs to metadata
     metadata <- metadata %>%
@@ -825,13 +828,14 @@ create_metadata_lego_ui <- function(metadata, plate_id, prep_date, stain_date, e
 
     metadata$`Plate ID` <- rep(plate_id, 96)
     metadata$`Prep Date` <- rep(prep_date, 96)
-    metadata$`Stain Date` <- rep(stain_date, 96)
+    # metadata$`Stain Date` <- rep(stain_date, 96)
+    metadata$`Run Date` <- rep(NA_character_, 96)
     metadata$`Experiment Type` <- rep(experiment_type, 96)
     metadata$`Stability Time point` <- rep(0, 96)
     metadata$`Sample Type` <- rep(sample_type, 96)
     metadata$`Sample Species` <- rep(sample_species, 96)
     metadata$`Sample Strain` <- rep(sample_strain, 96)
-    metadata$`CS&T Beads Lot #` <- rep(cst_lot_number, 96)
+    metadata$`CS&T Beads Lot #` <- rep(NA_character_, 96)
 
     return(metadata)
 }
@@ -1057,23 +1061,63 @@ map_fcs_filenames <- function(fcs_files, well_ID_file){
 
 }
 
+###### USE FLOWCORE LIBRARY TO EXTRACT KEYWORD METADATA####
+find_param <- function(fdata) {
+  df <- data.frame(flowCore::exprs(fdata)) %>%
+      select(!contains(c("SC", "Time")))
+  cnames <- colnames(df)
+  df <- df %>% summarise(across(cnames, median))
+  return(cnames[which(df == max(df) )])
+}
+
+##### LOOP THRU 8TH COLUMN TO EXTRACT PARAM #####
+grab_meta_data <- function(file_path, check_max_vals_wellid) {
+
+  mdat_ls <- list()
+
+  for (wi in check_max_vals_wellid) {
+    w = substr(wi, 14,15)
+    fdat <-  flowCore::read.FCS(filename = file.path(file_path, wi), transformation="linearize")
+    mdat_ls[[paste0("well_",w)]] <- find_param(fdat)
+  }
+
+  meta_data = flowCore::keyword(fdat)
+
+  mdat_ls$'CYT' <- meta_data$`$CYT`
+  mdat_ls$'CYTNUM' <- meta_data$CYTNUM
+  mdat_ls$'CSTLOT' <- meta_data$`CST BEADS LOT ID`
+  mdat_ls$'PLATENAME' <- meta_data$`PLATE NAME`
+  mdat_ls$'DATE' <- meta_data$`$DATE`
+  mdat_ls$'EXPTNAME' <- meta_data$`EXPERIMENT NAME`
+  mdat_ls$'USERNAME' <- meta_data$`EXPORT USER NAME`
+
+  return(mdat_ls)
+}
 
 ######################### MERGE METADATA FILE OUTLINE WITH POST-CYTOMETER USER INPUTS ################################
 # merge_metadata_for_OMIQ <- function(fcs_files, metadata, plate_id=NA, stain_date=NA, donor_id=NA, cytometer=NA, parameter=NA, notes=NA, experiment_type){
 
-merge_metadata_for_OMIQ <- function(fcs_files, metadata, plate_id=NA, donor_id=NA, cytometer=NA, parameter=NA, notes=NA){
+# merge_metadata_for_OMIQ <- function(fcs_files, metadata, plate_id=NA, donor_id=NA, cytometer=NA, parameter=NA, notes=NA){
+merge_metadata_for_OMIQ <- function(file_path, fcs_files, metadata, donor_id=NA, notes=NA){
 
+    check_max_vals_wellid <- fcs_files[which(grepl("[A-H]08.*fcs$",fcs_files))]
+    extracted_mdata <- grab_meta_data(file_path,check_max_vals_wellid)
+    parameter <- lapply(names(extracted_mdata), grep, pattern = "well", value=F)
+    param_index <- names(extracted_mdata)[which(sapply(parameter, FUN=function(X) 1 %in% X))]
+    parameter <- extracted_mdata[param_index]
+    parameter <- unlist(parameter, use.names = F)
+    parameter <- rep(gsub("[\\.]", "-", parameter), each = 12)
+    # parameter <- as_tibble(sapply(parameter, function(i){ifelse(i == "NA-A", "NA", paste0(i,"-A"))}))
 
-    parameter <- as_tibble(sapply(parameter, function(i){ifelse(i == "NA-A", "NA", paste0(i,"-A"))}))
-    df_sliced <- parameter %>% slice(rep(1:n(), each=12))
-
+    metadata$`Run Date` <- rep(extracted_mdata$DATE, nrow(metadata))
     metadata$Filename <- fcs_files
     metadata$`Donor ID` <- rep(donor_id, nrow(metadata))
-    metadata$Cytometer <- rep(paste0(cytometer, ' (', cytometer_list$`Serial Number`[cytometer_list$Nickname == cytometer][[1]], ')'), nrow(metadata))
-    metadata$Parameter <- df_sliced$Parameter
+    # metadata$Cytometer <- rep(paste0(cytometer, ' (', cytometer_list$`Serial Number`[cytometer_list$Nickname == cytometer][[1]], ')'), nrow(metadata))
+    metadata$Cytometer <- rep(paste0(gsub("[\"]", "", extracted_mdata$CYT), ' (', extracted_mdata$CYTNUM, ')'), nrow(metadata))
+    metadata$Parameter <- parameter
     metadata$Notes <- ifelse(is.null(notes) | is.na(notes) | notes == "", rep(NA, 96), rep(notes, 96))
 
-    message(colnames(metadata))
+    # message(colnames(metadata))
     # if(experiment_type == "S"){
     if(metadata$`Experiment Type`[1] == "S"){
         col_ind_start <- which(colnames(metadata) == "Gating Control")
@@ -1119,5 +1163,23 @@ merge_metadata_for_OMIQ <- function(fcs_files, metadata, plate_id=NA, donor_id=N
 
 }
 
+### AIRFLOW ping
+GET_airflow <- function(VM, dag_run_id) {
+    link <- paste0("http://", VM, ":8000/api/v1/dags/r_dag/dagRuns/", dag_run_id)
+    res <- httr::GET(url = link,
+                     config = authenticate("airflow", "airflow"),
+                     httr::add_headers(`accept` = 'application/json'),
+                     httr::content_type('application/json'))
+    res <- content(res, "parsed")
+    res
+}
 
-
+DELETE_airflow <- function(VM, dag_run_id) {
+    link <- paste0("http://", VM, ":8000/api/v1/dags/r_dag/dagRuns/", dag_run_id)
+    res <- httr::DELETE(url = link,
+                     config = authenticate("airflow", "airflow"),
+                     httr::add_headers(`accept` = 'application/json'),
+                     httr::content_type('application/json'))
+    res <- content(res, "parsed")
+    res
+}
