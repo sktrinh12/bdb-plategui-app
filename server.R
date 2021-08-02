@@ -1062,12 +1062,14 @@ server = function(input, output, session) {
   # )
 
   observeEvent(input$download_metadata_outline_file, {
+    file_name <- paste0(input$plate_id,"-metadata-outline.csv")
     path_exp <- file.path(datadump,
                           input$plate_id,
-                          paste0(input$plate_id,"-metadata-outline.csv"))
-    write_csv(final_metadata_outline_from_inputs(), path_exp)
+                          file_name
+                          )
     msg = paste('Data saved to:', path_exp)
     message(msg)
+    write_csv(final_metadata_outline_from_inputs(), path_exp)
     observe(output$data_saved_text_tab1 <- renderText(HTML(msg)))
   })
 
@@ -1119,23 +1121,23 @@ server = function(input, output, session) {
   # })
 
   ## Create table of parameters with dropdowns from parameters_list
-  # output$parameters_table <- renderRHandsontable({
-  #   rhandsontable(
-  #     data.frame("Parameter" = rep(NA_character_, 8)),
-  #     rowHeaders = c(paste("Row", LETTERS[1:8])),
-  #     rowHeaderWidth = 100
-  #   ) %>%
-  #     hot_col(col = "Parameter",
-  #             type = "dropdown",
-  #             source = parameters_list()) %>%
-  #     hot_col(1, width = 100)
-  # })
+  output$parameters_table <- renderRHandsontable({
+    rhandsontable(
+      data.frame("Parameter" = rep(NA_character_, 8)),
+      rowHeaders = c(paste("Row", LETTERS[1:8])),
+      rowHeaderWidth = 100
+    ) %>%
+      hot_col(col = "Parameter",
+              type = "dropdown",
+              source = parameters_list()) %>%
+      hot_col(1, width = 100)
+  })
 
   ## Convert parameters table to R object to input to finalized metadata function
-  # parameters_obj <- eventReactive(input$save_final_metadata_button, {
-  #   if (!is.null(input$parameters_table))
-  #     return(data.frame(hot_to_r(input$parameters_table), stringsAsFactors = FALSE))
-  # })
+  parameters_obj <- eventReactive(input$save_final_metadata_button, {
+    if (!is.null(input$parameters_table))
+      return(data.frame(hot_to_r(input$parameters_table), stringsAsFactors = FALSE))
+  })
 
   ###################################### STEP 4: Save data and download to final metadata csv #########################################
 
@@ -1254,18 +1256,30 @@ server = function(input, output, session) {
   })
 
   check_log <- reactive({
-    invalidateLater(68000, session) # ~1.3 mins
     ct <- paste0(substr(current_time, 1, nchar(current_time)-1), "+00:00")
     fp <- file.path(datalogs, ct, "1.log")
-    tryCatch({
-      raw_text <- readLines(fp)
-      return(raw_text)
-    },
-    error = function(e) {
-          Sys.sleep(10)
-          print(paste0("Read log file error: ", e))
-    })
+
+    if (ui_status$text != "Stop button pressed") {
+      invalidateLater(12000, session) # ~1.3 mins
+      # invalidateLater(68000, session) # ~1.3 mins
+      tryCatch({
+        raw_text <- readLines(fp)
+        split_text <- stringi::stri_split(str = raw_text, regex = "\\n")
+        replaced_text <- lapply(split_text, p) # list with <p> html tags
+        return(replaced_text)
+      },
+      error = function(e) {
+            emsg <- paste0("Read log file error: ", e)
+            print(emsg)
+            return(emsg)
+      })
+    } else {
+          msg <- "Stop button pressed, no longer checking log file"
+          print(msg)
+          return(msg)
+      }
   })
+
 
   output$log_output <- renderUI({
     check_log()
