@@ -1263,6 +1263,7 @@ server = function(input, output, session) {
       invalidateLater(12000, session) # ~1.3 mins
       # invalidateLater(68000, session) # ~1.3 mins
       tryCatch({
+        Sys.sleep(5)
         raw_text <- readLines(fp)
         split_text <- stringi::stri_split(str = raw_text, regex = "\\n")
         replaced_text <- lapply(split_text, p) # list with <p> html tags
