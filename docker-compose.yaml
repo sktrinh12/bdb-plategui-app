@@ -3,6 +3,7 @@ services:
   platelayout:
     build:
       context: .
+    #image: bdb/shiny-platelayout
     ports:
       - "3838:3838"
     volumes:

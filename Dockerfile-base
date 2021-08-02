@@ -5,6 +5,8 @@ RUN apt-get update && \
     apt-get clean
 
 RUN apt-get update -qq && apt-get -y --no-install-recommends install \
+    build-essential \
+    libglpk40 \
     libxml2-dev \
     libcairo2-dev \
     libpq-dev \
@@ -22,3 +24,6 @@ COPY renv.lock ./renv.lock
 RUN Rscript -e 'install.packages("renv")'
 RUN Rscript -e 'renv::consent(provided=TRUE)'
 RUN Rscript -e 'renv::restore()'
+
+COPY install_pkgs.R .
+RUN Rscript install_pkgs.R

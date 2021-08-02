@@ -1,10 +1,6 @@
-FROM reg_shiny_base:latest
+FROM bdb/shiny-base:latest
 
 ENV APP_HOME "/home/bdb"
-
-RUN apt-get update && apt-get install -y \
-  build-essential \
-  libglpk40
 
 RUN useradd -m -d $APP_HOME bdb \
   && chown -R bdb:bdb $APP_HOME \
@@ -14,9 +10,6 @@ COPY . $APP_HOME/app
 
 # change ownership to UNAME
 RUN chown -R $UNAME:$UNAME $APP_HOME
-
-COPY install_pkgs.R .
-RUN Rscript install_pkgs.R
 
 EXPOSE 3838
 
