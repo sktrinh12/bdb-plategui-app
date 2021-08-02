@@ -233,8 +233,11 @@ ui <- tagList(
                      br(),
                      div(style="color: #2A7BE1;",h4(em("Log output"))),
                      fluidRow(
-                              wellPanel(column(12, uiOutput("log_output")))
-                     )
+                        wellPanel(id = "logpanel",
+                                  column(12, uiOutput("log_output") %>%
+                                  tagAppendAttributes(style= 'overflow-y:scroll; max-height:800px; font-size: 10px;'))
+                                  )
+                              )
 
                  )))
 )
