@@ -25,6 +25,7 @@ server = function(input, output, session) {
   clones <- c(as.character(BV421_DF$Clone)) # list of clones for clone dropdowns
   rows <- c('NA', 'A', 'B','C','D','E','F','G','H', plate_config_wells()$Well.ID) # list of rows for gating control dropdown
   default_fcs_filenames <- readr::read_csv('fixed_lists.csv')$`Default FCS Filenames`
+  reactive_vals <- reactiveValues() #reactive values to hold 3 metadata values from fcs files
 
   ################################# ------------ PLATE LAYOUT TAB --------- ###################################################
 
@@ -1107,9 +1108,8 @@ server = function(input, output, session) {
     # inFile <- input$metadata_upload
     # if (is.null(inFile))
     #   return(NULL)
-    fcs_filenames <- list.files(file.path(datadump, plate_id_omiq_input()), pattern = "*.fcs$")
     message(paste0('number of fcs files: ', length(fcs_filenames)))
-    map_fcs_filenames(fcs_filenames, file.path(datadump, plate_id_omiq_input(), paste0(plate_id_omiq_input(), "-metadata-outline.csv")))
+    map_fcs_filenames(fcs_filenames(), file.path(datadump, plate_id_omiq_input(), paste0(plate_id_omiq_input(), "-metadata-outline.csv")))
   })
   ###################################### STEP 3: Create table for parameters inputs #########################################
 
@@ -1119,25 +1119,28 @@ server = function(input, output, session) {
   #   return(sort(filtered_df$Detector))
 
   # })
+  # parameters_list <- sort(filter(cytometer_list, Nickname == "X-20A (Groucho)")$Detector)
 
   ## Create table of parameters with dropdowns from parameters_list
-  output$parameters_table <- renderRHandsontable({
-    rhandsontable(
-      data.frame("Parameter" = rep(NA_character_, 8)),
-      rowHeaders = c(paste("Row", LETTERS[1:8])),
-      rowHeaderWidth = 100
-    ) %>%
-      hot_col(col = "Parameter",
-              type = "dropdown",
-              source = parameters_list()) %>%
-      hot_col(1, width = 100)
-  })
+  # output$parameters_table <- renderRHandsontable({
+  #   rhandsontable(
+  #     data.frame("Parameter" = rep(NA_character_, 8)),
+  #     rowHeaders = c(paste("Row", LETTERS[1:8])),
+  #     rowHeaderWidth = 100
+  #   ) %>%
+  #     hot_col(col = "Parameter",
+  #             type = "dropdown",
+  #             source = parameters_list) %>%
+  #     hot_col(1, width = 100)
+  # })
 
   ## Convert parameters table to R object to input to finalized metadata function
-  parameters_obj <- eventReactive(input$save_final_metadata_button, {
-    if (!is.null(input$parameters_table))
-      return(data.frame(hot_to_r(input$parameters_table), stringsAsFactors = FALSE))
-  })
+  # parameters_obj <- eventReactive(input$save_final_metadata_button, {
+  #   if (!is.null(input$parameters_table))
+  #     # return(data.frame(hot_to_r(input$parameters_table), stringsAsFactors = FALSE))
+  #     return(input$parameters_table)
+  # })
+
 
   ###################################### STEP 4: Save data and download to final metadata csv #########################################
 
@@ -1148,8 +1151,44 @@ server = function(input, output, session) {
       )
 
   observeEvent(input$save_final_metadata_button, {
-    # output$saved_final <- renderText('Data Saved!')
-    ui_status$text <- 'Data Saved!'
+
+    # ui_status$text <- 'Loading...'
+    # session$sendCustomMessage("saveBtnMessage", "Loading...")
+    parameter <- rep(NA_character_, 8)
+    file_path <- file.path(datadump, plate_id_omiq_input())
+    check_max_vals_wellid <- fcs_filenames()[which(grepl("[A-H]08.*fcs$",fcs_filenames()))]
+    extracted_mdata <- grab_meta_data(file_path, check_max_vals_wellid)
+    param <- lapply(names(extracted_mdata), grep, pattern = "well", value=F)
+    param_index <- names(extracted_mdata)[which(sapply(param, FUN=function(X) 1 %in% X))]
+    param <- extracted_mdata[param_index]
+    param <- unlist(param, use.names = F)
+    param <- gsub("[\\.]", "-", param)
+
+    # replace some or all of the NA's in the vector
+    for (i in seq(1,length(param))) {
+      parameter[i] <- param[i]
+    }
+
+    reactive_vals$cytometer_name <- extracted_mdata$CYT
+    reactive_vals$serial_num <- extracted_mdata$CYTNUM
+    reactive_vals$run_date <- extracted_mdata$DATE
+
+    parameters_list <- sort(filter(cytometer_list, `Serial Number` == extracted_mdata$CYTNUM)$Detector)
+
+    output$parameters_table <- renderRHandsontable({
+      rhandsontable(
+        data.frame("Parameter" = parameter),
+        rowHeaders = c(paste("Row", LETTERS[1:8])),
+        rowHeaderWidth = 172
+      ) %>%
+        hot_col(col = "Parameter",
+                type = "dropdown",
+                source = parameters_list) %>%
+        hot_col(1, width = 172)
+    })
+
+    ui_status$text <- 'Updated data!'
+    # session$sendCustomMessage("saveBtnMessage", "Updated data!")
   })
 
 
@@ -1159,13 +1198,20 @@ server = function(input, output, session) {
 
   plate_id_omiq_input <- reactive({ input$plate_id_omiq})
 
+  fcs_filenames <- reactive({
+          list.files(file.path(datadump, plate_id_omiq_input()), pattern = "*.fcs$")
+  })
 
   # FINAL Metadata table for OMIQ
   # final_metadata_table_for_omiq <- reactive({ merge_metadata_for_OMIQ(mapped_fcs_files()$Filename, uploaded_metadata_outline(), input$plate_id_omiq, input$donor_id, input$cytometer, parameters_obj(), input$notes) })
   final_metadata_table_for_omiq <- reactive({
-                                    merge_metadata_for_OMIQ(file.path(datadump, plate_id_omiq_input()),
+                                    merge_metadata_for_OMIQ(
                                       mapped_fcs_files()$Filename,
                                       uploaded_metadata_outline(),
+                                      hot_to_r(input$parameters_table),
+                                      reactive_vals$cytometer_name,
+                                      reactive_vals$serial_num,
+                                      reactive_vals$run_date,
                                       input$donor_id,
                                       input$notes)
                                 })
