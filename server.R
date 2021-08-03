@@ -1224,6 +1224,7 @@ server = function(input, output, session) {
     ui_status$text <- 'Running...'
     session$sendCustomMessage('disableButton', 'pushData')
     session$sendCustomMessage('disableButton', 'rerun')
+    session$sendCustomMessage('disableButton', 'saved_final')
     session$sendCustomMessage('btnAppear', 'stop')
     session$sendCustomMessage('addClass', message = list(id = 'buttonload', btn = 'pushData'))
 
@@ -1250,8 +1251,6 @@ server = function(input, output, session) {
                        y = input$col2,
                        z = input$col3)
     POP_COLORS <- setNames(POP_COLORS, LMG_NAMES)
-
-
 
     save(LMG_NAMES, file = file.path(path_run_params, "LMG_NAMES.RData"))
     save(POP_MINS, file = file.path(path_run_params, "POP_MINS.RData"))
@@ -1297,6 +1296,7 @@ server = function(input, output, session) {
   save_string_result <- content(res, "parsed")
   session$sendCustomMessage(type = "msgbox",
                             message = paste0("status: ", as.character(save_string_result$state)))
+
   output$airflow_response <- renderUI({
     save_string_result
   })
@@ -1339,6 +1339,7 @@ server = function(input, output, session) {
          if (res$state == "success" | ui_status$text == "Stop button pressed") {
              session$sendCustomMessage('enableButton', 'pushData')
              session$sendCustomMessage('enableButton', 'rerun')
+             session$sendCustomMessage('enableButton', 'saved_final')
              session$sendCustomMessage('removeClass', 'pushData')
              session$sendCustomMessage('btnDisappear', 'stop')
              ui_status$text <- paste0('OMIQ pipeline completed for ', plate_id_omiq_input())
@@ -1358,6 +1359,7 @@ server = function(input, output, session) {
           session$sendCustomMessage("enableButton", "rerun")
           session$sendCustomMessage("enableButton", "pushData")
           session$sendCustomMessage('btnDisappear', 'stop')
+          session$sendCustomMessage('enableButton', 'saved_final')
           session$sendCustomMessage('removeClass', 'pushData')
           session$sendCustomMessage('removeClass', 'rerun')
           fp <- file.path(datadump, plate_id_omiq_input(), "dag_run_id.txt")
@@ -1377,5 +1379,129 @@ server = function(input, output, session) {
                                     message = paste("Error:", e))
           }
           )
+  })
+
+  rerun_data_path <- reactive({
+    folder_dir <- plate_id_omiq_input()
+    message(folder_dir)
+    path_exp <- file.path(datadump, folder_dir)
+    check_dir <- dir.exists(path_exp)
+
+    validate(
+             need(check_dir, paste("Ensure you have already ran the pipeline and files exists in:", path_exp))
+             )
+    return(path_exp)
+  })
+
+  observeEvent(input$rerun, {
+
+
+    ui_status$text <- 'Running...'
+    session$sendCustomMessage('disableButton', 'pushData')
+    session$sendCustomMessage('disableButton', 'saved_final')
+    session$sendCustomMessage('disableButton', 'rerun')
+    session$sendCustomMessage('btnAppear', 'stop')
+    session$sendCustomMessage('addClass', message = list(id = 'buttonload', btn = 'rerun'))
+
+    WIDTH_BASIS <- input$biexSlider
+    LMG_NAMES <- c(input$Pop1, input$Pop2, input$Pop3)
+    POP_MINS <- list(x = input$PopCount1,
+                     y = input$PopCount2,
+                     z = input$PopCount3)
+    POP_MINS <- setNames(POP_MINS, LMG_NAMES)
+    print(paste0('width basis: ', WIDTH_BASIS))
+    print(paste0('LMG names: ', LMG_NAMES))
+    print(paste0('POP_MINS: ', POP_MINS))
+
+    POP_COLORS <- list(x = input$col1,
+                       y = input$col2,
+                       z = input$col3)
+    POP_COLORS <- setNames(POP_COLORS, LMG_NAMES)
+
+    path_run_params <- file.path(rerun_data_path(), "run-params")
+
+    save(LMG_NAMES, file = file.path(path_run_params, "LMG_NAMES.RData"))
+    save(POP_MINS, file = file.path(path_run_params, "POP_MINS.RData"))
+    save(WIDTH_BASIS, file = file.path(path_run_params, "WIDTH_BASIS.RData"))
+    save(POP_COLORS, file = file.path(path_run_params, "POP_COLORS.RData"))
+
+    # Call Airflow
+
+    folder_dir <- basename(rerun_data_path())
+    current_time = Sys.time()
+    dag_run_id = paste0(folder_dir, "_", format(current_time, "%Y-%m-%dT%H_%M_%S"))
+    write(dag_run_id, file = file.path(datadump, plate_id_omiq_input(), "rerun_dag_run_id.txt"))
+    print(paste0("dag run id: ", dag_run_id))
+    attr(current_time, "tzone") <- "UTC"
+    current_time <- format(current_time, '%Y-%m-%dT%H:%M:%SZ')
+    print(paste("current UTC time:", current_time))
+
+    body <- list(conf=list(EXP_ID=folder_dir, RE_RUN="TRUE"), dag_run_id=dag_run_id, execution_date=current_time)
+    link <- paste0("http://", VM, ":8000/api/v1/dags/r_dag/dagRuns")
+    res <- httr::POST(url = link,
+                      config = authenticate("airflow", "airflow"),
+                      body = jsonlite::toJSON(body, pretty = T, auto_unbox = T),
+                      httr::add_headers(`accept` = 'application/json'),
+                      httr::content_type('application/json'))
+
+    # Output response to UI
+    save_string_result <- content(res, "parsed")
+    session$sendCustomMessage(type = "msgbox",
+                              message = paste0("status: ", as.character(save_string_result$state)))
+
+    output$airflow_response <- renderUI({
+      save_string_result
+    })
+
+    rerun_check_log <- reactive({
+      ct <- paste0(substr(current_time, 1, nchar(current_time)-1), "+00:00")
+      fp <- file.path(datalogs, ct, "1.log")
+
+    if (ui_status$text != "Stop button pressed") {
+      invalidateLater(12000, session) # ~1.3 mins
+      # invalidateLater(68000, session) # ~1.3 mins
+      tryCatch({
+        Sys.sleep(5)
+        raw_text <- readLines(fp)
+        split_text <- stringi::stri_split(str = raw_text, regex = "\\n")
+        replaced_text <- lapply(split_text, p) # list with <p> html tags
+        return(replaced_text)
+      },
+      error = function(e) {
+            emsg <- paste0("Read log file error: ", e)
+            print(emsg)
+            return(emsg)
+      })
+    } else {
+          msg <- "Stop button pressed, no longer checking log file"
+          print(msg)
+          return(msg)
+      }
+    })
+
+
+    output$log_output <- renderUI({
+      rerun_check_log()
+    })
+
+    # reactivePoll check - check rest API every 15 seconds
+    observe({
+        tryCatch( {
+           res <- GET_airflow(VM, dag_run_id)
+           if (res$state == "success" | ui_status$text == "Stop button pressed") {
+               session$sendCustomMessage('enableButton', 'pushData')
+               session$sendCustomMessage('enableButton', 'rerun')
+               session$sendCustomMessage('enableButton', 'saved_final')
+               session$sendCustomMessage('removeClass', 'pushData')
+               session$sendCustomMessage('btnDisappear', 'stop')
+               ui_status$text <- paste0('OMIQ pipeline completed for ', plate_id_omiq_input())
+           } else {
+               invalidateLater(pollTimer, session)
+           }
+        },
+        error = function(e) {
+              print(paste0("GET_airflow error: ", e))
+        })
+    })
   })
 }
