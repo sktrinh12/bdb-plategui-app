@@ -187,11 +187,11 @@ ui <- tagList(
                              # fluidRow(column(12,
                              #                 fileInput("metadata_upload", "Upload Metadata Outline CSV*", multiple=FALSE, icon("upload")))
                              #          ),
-                             fluidRow(column(8,textInput("plate_id_omiq", "Plate ID*", placeholder="YYYYMMDD-INITIALS-PLATE#", value = "20210319-RB-FY21w5p8"))),
-                             fluidRow(column(8,textInput("donor_id", "Donor ID", value = 'NA'))),
-                             # fluidRow(
+                             fluidRow(column(12,textInput("plate_id_omiq", "Plate ID*", placeholder="YYYYMMDD-INITIALS-PLATE#", value = "20210319-RB-FY21w5p8"))),
+                             fluidRow(column(12,textInput("donor_id", "Donor ID", value = 'NA'))),
+                             fluidRow(
                              #     column(6,selectizeInput("cytometer", "Cytometer*", choices = unique(cytometer_list$Nickname), options=list(create=TRUE))),
-                             #     column(6,rHandsontableOutput("parameters_table"))),
+                                 column(12,rHandsontableOutput("parameters_table"))),
                              fluidRow(column(12, textAreaInput("notes", "Notes", placeholder="Add any notes regarding your experiment.", height="100px"))),
                              fluidRow(column(12,p(em(h6('* indicates required field'))))),
                              fluidRow(column(6,actionButton("save_final_metadata_button", "Save Data", icon("save"), class="btn-primary"))),
