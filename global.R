@@ -1098,22 +1098,33 @@ grab_meta_data <- function(file_path, check_max_vals_wellid) {
 # merge_metadata_for_OMIQ <- function(fcs_files, metadata, plate_id=NA, stain_date=NA, donor_id=NA, cytometer=NA, parameter=NA, notes=NA, experiment_type){
 
 # merge_metadata_for_OMIQ <- function(fcs_files, metadata, plate_id=NA, donor_id=NA, cytometer=NA, parameter=NA, notes=NA){
-merge_metadata_for_OMIQ <- function(file_path, fcs_files, metadata, donor_id=NA, notes=NA){
+# merge_metadata_for_OMIQ <- function(file_path, fcs_files, metadata, donor_id=NA, notes=NA){
+merge_metadata_for_OMIQ <- function(fcs_files,
+                                    metadata,
+                                    parameter,
+                                    cytometer,
+                                    serial_num,
+                                    run_date,
+                                    donor_id=NA,
+                                    notes=NA) {
 
-    check_max_vals_wellid <- fcs_files[which(grepl("[A-H]08.*fcs$",fcs_files))]
-    extracted_mdata <- grab_meta_data(file_path,check_max_vals_wellid)
-    parameter <- lapply(names(extracted_mdata), grep, pattern = "well", value=F)
-    param_index <- names(extracted_mdata)[which(sapply(parameter, FUN=function(X) 1 %in% X))]
-    parameter <- extracted_mdata[param_index]
+    # check_max_vals_wellid <- fcs_files[which(grepl("[A-H]08.*fcs$",fcs_files))]
+    # extracted_mdata <- grab_meta_data(file_path,check_max_vals_wellid)
+    # parameter <- lapply(names(extracted_mdata), grep, pattern = "well", value=F)
+    # param_index <- names(extracted_mdata)[which(sapply(parameter, FUN=function(X) 1 %in% X))]
+    # parameter <- extracted_mdata[param_index]
     parameter <- unlist(parameter, use.names = F)
-    parameter <- rep(gsub("[\\.]", "-", parameter), each = 12)
+    parameter <- rep(parameter, each = 12)
+    # parameter <- rep(gsub("[\\.]", "-", parameter), each = 12)
     # parameter <- as_tibble(sapply(parameter, function(i){ifelse(i == "NA-A", "NA", paste0(i,"-A"))}))
+    print(parameter)
 
-    metadata$`Run Date` <- rep(extracted_mdata$DATE, nrow(metadata))
+    metadata$`Run Date` <- rep(run_date, nrow(metadata))
     metadata$Filename <- fcs_files
     metadata$`Donor ID` <- rep(donor_id, nrow(metadata))
     # metadata$Cytometer <- rep(paste0(cytometer, ' (', cytometer_list$`Serial Number`[cytometer_list$Nickname == cytometer][[1]], ')'), nrow(metadata))
-    metadata$Cytometer <- rep(paste0(gsub("[\"]", "", extracted_mdata$CYT), ' (', extracted_mdata$CYTNUM, ')'), nrow(metadata))
+    # metadata$Cytometer <- rep(paste0(gsub("[\"]", "", extracted_mdata$CYT), ' (', extracted_mdata$CYTNUM, ')'), nrow(metadata))
+    metadata$Cytometer <- rep(paste0(gsub("[\"]", "", cytometer), ' (', serial_num, ')'), nrow(metadata))
     metadata$Parameter <- parameter
     metadata$Notes <- ifelse(is.null(notes) | is.na(notes) | notes == "", rep(NA, 96), rep(notes, 96))
 
