@@ -270,9 +270,15 @@
   width: 4em;
   height: 4em;
 }
+
 #stop {
   display:none;
 }
+
+#logpanel {
+  height: 800px;
+}
+
 .buttonload {
   /* margin: 0px auto; */
   margin: -25px 0 0 -25px;
