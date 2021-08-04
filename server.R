@@ -8,13 +8,6 @@ server = function(input, output, session) {
   stats_file <- "all_stats.csv" # file name to search when complete
   pollTimer <- 15000 # poll every 15 seconds
 
-  ## check azure file disk 'datadump' for testing locally and production
-
-  datadump = "/datadump/data"
-  if (!dir.exists(datadump)) {
-    datadump = "Z:/data"
-  }
-
   datalogs = file.path(dirname(datadump), "logs", "r_dag", "omiq_pipeline")
 
   ######################## Inputted files - need to be used as "pin" in RStudio Connect ################################
@@ -1076,6 +1069,20 @@ server = function(input, output, session) {
 
   ############################################ ------------ RUN OMIQ TAB --------- #########################################
 
+  has_new_dirs <- function() {
+    unique(basename(list.dirs(datadump)))
+  }
+
+  get_dirs <- function() {
+    basename(list.dirs(datadump))
+  }
+
+  current_dirs <- reactivePoll(75, session, checkFunc = has_new_dirs, valueFunc = get_dirs)
+
+  observeEvent(current_dirs(), ignoreInit = T, ignoreNULL = T, {
+                 Sys.sleep(5)
+                 updateSelectInput(session, "plate_id_omiq", choices = current_dirs())
+  })
 
   ###################################### STEP 1: Read in metadata outline csv #########################################
 
