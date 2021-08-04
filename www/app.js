@@ -33,4 +33,8 @@
     Shiny.addCustomMessageHandler("btnAppear", function(id) {
       $("#" + id).show();
     });
+    // save button load
+    Shiny.addCustomMessageHandler("saveBtnMessage", function(message) {
+      $("#saved_final").text(`STATUS: ${message}`);
+    });
   })
