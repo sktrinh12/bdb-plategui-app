@@ -11,6 +11,12 @@ fluorochrome <- sort(unique(readr::read_csv('fixed_lists.csv')$Fluorochromes))
 experiment_type_list <- c('OB', 'LEGO', 'S')
 cytometer_list <- readr::read_csv('cytometer_parameter_lists.csv')
 
+## check azure file disk 'datadump' for testing locally and production
+datadump = "/datadump/data"
+if (!dir.exists(datadump)) {
+    datadump = "Z:/data"
+}
+
 ########################  FIND SPEC DATA FROM BV421 DB ############################
 find_spec_data <- function(df, sample_type, pop_1, pop_2, pop_3){
 
