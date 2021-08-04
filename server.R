@@ -4,7 +4,7 @@ server = function(input, output, session) {
   options(shiny.maxRequestSize=30*1024^2) # Update max request size for RStudio connect to 30 MB per file uploaded in fileInputs
   options(readr.num_columns = 0) # to disable from printing column specs for readr-based tables
   options(readxl.num_columns = 0)
-  VM = "10.29.128.4" # VM with Docker Container
+  VM = "10.29.128.4" # airflow VM
   stats_file <- "all_stats.csv" # file name to search when complete
   pollTimer <- 15000 # poll every 15 seconds
 
@@ -1153,7 +1153,11 @@ server = function(input, output, session) {
   observeEvent(input$save_final_metadata_button, {
 
     # ui_status$text <- 'Loading...'
-    # session$sendCustomMessage("saveBtnMessage", "Loading...")
+    session$sendCustomMessage("saveBtnMessage", "Loading...")
+    session$sendCustomMessage('disableButton', 'save_final_metadata_button')
+    session$sendCustomMessage('disableButton', 'pushData')
+    session$sendCustomMessage('disableButton', 'rerun')
+    session$sendCustomMessage('addClass', message = list(id = 'buttonload', btn = 'save_final_metadata_button'))
     parameter <- rep(NA_character_, 8)
     file_path <- file.path(datadump, plate_id_omiq_input())
     check_max_vals_wellid <- fcs_filenames()[which(grepl("[A-H]08.*fcs$",fcs_filenames()))]
@@ -1187,8 +1191,12 @@ server = function(input, output, session) {
         hot_col(1, width = 172)
     })
 
-    ui_status$text <- 'Updated data!'
-    # session$sendCustomMessage("saveBtnMessage", "Updated data!")
+    # ui_status$text <- 'Updated data!'
+    session$sendCustomMessage("saveBtnMessage", "Updated data!")
+    session$sendCustomMessage('enableButton', 'save_final_metadata_button')
+    session$sendCustomMessage('enableButton', 'pushData')
+    session$sendCustomMessage('enableButton', 'rerun')
+    session$sendCustomMessage('removeClass', 'save_final_metadata_button')
   })
 
 
@@ -1224,7 +1232,7 @@ server = function(input, output, session) {
     ui_status$text <- 'Running...'
     session$sendCustomMessage('disableButton', 'pushData')
     session$sendCustomMessage('disableButton', 'rerun')
-    session$sendCustomMessage('disableButton', 'saved_final')
+    session$sendCustomMessage('disableButton', 'save_final_metadata_button')
     session$sendCustomMessage('btnAppear', 'stop')
     session$sendCustomMessage('addClass', message = list(id = 'buttonload', btn = 'pushData'))
 
@@ -1339,7 +1347,7 @@ server = function(input, output, session) {
          if (res$state == "success" | ui_status$text == "Stop button pressed") {
              session$sendCustomMessage('enableButton', 'pushData')
              session$sendCustomMessage('enableButton', 'rerun')
-             session$sendCustomMessage('enableButton', 'saved_final')
+             session$sendCustomMessage('enableButton', 'save_final_metadata_button')
              session$sendCustomMessage('removeClass', 'pushData')
              session$sendCustomMessage('btnDisappear', 'stop')
              ui_status$text <- paste0('OMIQ pipeline completed for ', plate_id_omiq_input())
@@ -1359,7 +1367,7 @@ server = function(input, output, session) {
           session$sendCustomMessage("enableButton", "rerun")
           session$sendCustomMessage("enableButton", "pushData")
           session$sendCustomMessage('btnDisappear', 'stop')
-          session$sendCustomMessage('enableButton', 'saved_final')
+          session$sendCustomMessage('enableButton', 'save_final_metadata_button')
           session$sendCustomMessage('removeClass', 'pushData')
           session$sendCustomMessage('removeClass', 'rerun')
           fp <- file.path(datadump, plate_id_omiq_input(), "dag_run_id.txt")
@@ -1398,7 +1406,7 @@ server = function(input, output, session) {
 
     ui_status$text <- 'Running...'
     session$sendCustomMessage('disableButton', 'pushData')
-    session$sendCustomMessage('disableButton', 'saved_final')
+    session$sendCustomMessage('disableButton', 'save_final_metadata_button')
     session$sendCustomMessage('disableButton', 'rerun')
     session$sendCustomMessage('btnAppear', 'stop')
     session$sendCustomMessage('addClass', message = list(id = 'buttonload', btn = 'rerun'))
@@ -1491,7 +1499,7 @@ server = function(input, output, session) {
            if (res$state == "success" | ui_status$text == "Stop button pressed") {
                session$sendCustomMessage('enableButton', 'pushData')
                session$sendCustomMessage('enableButton', 'rerun')
-               session$sendCustomMessage('enableButton', 'saved_final')
+               session$sendCustomMessage('enableButton', 'save_final_metadata_button')
                session$sendCustomMessage('removeClass', 'pushData')
                session$sendCustomMessage('btnDisappear', 'stop')
                ui_status$text <- paste0('OMIQ pipeline completed for ', plate_id_omiq_input())
