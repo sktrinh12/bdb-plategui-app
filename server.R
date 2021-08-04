@@ -1351,7 +1351,8 @@ server = function(input, output, session) {
   observe({
       tryCatch( {
          res <- GET_airflow(VM, dag_run_id)
-         if (res$state == "success" | ui_status$text == "Stop button pressed") {
+         print(ui_status$text)
+         if (res$state == "success" | substr(ui_status$text, 1,31) == "STATUS: OMIQ pipeline completed") {
              session$sendCustomMessage('enableButton', 'pushData')
              session$sendCustomMessage('enableButton', 'rerun')
              session$sendCustomMessage('enableButton', 'save_final_metadata_button')
@@ -1503,7 +1504,8 @@ server = function(input, output, session) {
     observe({
         tryCatch( {
            res <- GET_airflow(VM, dag_run_id)
-           if (res$state == "success" | ui_status$text == "Stop button pressed") {
+           print(ui_status$text)
+           if (res$state == "success" | substr(ui_status$text, 1,31) == "STATUS: OMIQ pipeline completed") {
                session$sendCustomMessage('enableButton', 'pushData')
                session$sendCustomMessage('enableButton', 'rerun')
                session$sendCustomMessage('enableButton', 'save_final_metadata_button')
