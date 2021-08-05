@@ -1077,7 +1077,7 @@ server = function(input, output, session) {
     basename(list.dirs(datadump, recursive = FALSE))
   }
 
-  current_dirs <- reactivePoll(75, session, checkFunc = has_new_dirs, valueFunc = get_dirs)
+  current_dirs <- reactivePoll(30000, session, checkFunc = has_new_dirs, valueFunc = get_dirs)
 
   observeEvent(current_dirs(), ignoreInit = T, ignoreNULL = T, {
                  Sys.sleep(5)
