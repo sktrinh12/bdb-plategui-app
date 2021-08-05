@@ -1320,9 +1320,9 @@ server = function(input, output, session) {
     ct <- paste0(substr(current_time, 1, nchar(current_time)-1), "+00:00")
     fp <- file.path(datalogs, ct, "1.log")
 
-    if (ui_status$text != "Stop button pressed") {
-      invalidateLater(12000, session) # ~1.3 mins
-      # invalidateLater(68000, session) # ~1.3 mins
+    if (ui_status$text != "Stop button pressed" |
+          substr(ui_status$text, 1,31) == "STATUS: OMIQ pipeline completed" ) {
+      invalidateLater(12000, session) # 12 secs
       tryCatch({
         Sys.sleep(5)
         raw_text <- readLines(fp)
@@ -1473,9 +1473,9 @@ server = function(input, output, session) {
       ct <- paste0(substr(current_time, 1, nchar(current_time)-1), "+00:00")
       fp <- file.path(datalogs, ct, "1.log")
 
-    if (ui_status$text != "Stop button pressed") {
-      invalidateLater(12000, session) # ~1.3 mins
-      # invalidateLater(68000, session) # ~1.3 mins
+    if (ui_status$text != "Stop button pressed" |
+          substr(ui_status$text, 1,31) == "STATUS: OMIQ pipeline completed") {
+      invalidateLater(12000, session) # ~ 12 secs
       tryCatch({
         Sys.sleep(5)
         raw_text <- readLines(fp)
