@@ -701,7 +701,8 @@ create_metadata_table <- function(df, metadata, plate_id, prep_date, experiment_
     metadata$Clone <- df_sliced$Clone
     metadata$`Fluorochrome` <- df_sliced$Fluorochrome
     metadata$`Batch Number` <- df_sliced$Batch.Number
-    metadata$`ug/test` <- rep(c(titrateList, rep(NA, 12-length(titrateList))),nrow(df))
+    # metadata$`ug/test` <- rep(c(titrateList, rep(NA, 12-length(titrateList))),nrow(df))
+    metadata$`Concentration` <- rep(c(titrateList, rep(NA, 12-length(titrateList))),nrow(df))
     metadata$units <- rep(units, nrow(metadata))
     metadata$`Sample Type` <- rep(sample_type, 96)
     metadata$`Sample Species` <- rep(sample_species, 96)
@@ -830,7 +831,8 @@ create_metadata_lego_ui <- function(metadata, plate_id, prep_date, experiment_ty
         add_column("Ab/Iso Type" = rep(NA, 96)) %>%
         relocate(`Ab/Iso Type`, .before=`Gating Control`) %>%
         add_column("Concentration (mg/ml)" = rep(NA, 96)) %>%
-        relocate(`Concentration (mg/ml)`, .before=`ug/test`)
+        relocate(`Concentration (mg/ml)`, .before=`Concentration`)
+        # relocate(`Concentration (mg/ml)`, .before=`ug/test`)
 
     metadata$`Plate ID` <- rep(plate_id, 96)
     metadata$`Prep Date` <- rep(prep_date, 96)
@@ -898,7 +900,8 @@ create_metadata_table_lego <- function(ab_df, iso_df, reag_no, metadata,
                                                       df_reagent$Optimal.units))) %>%
         mutate(`gating_method` = replace(`gating_method`, row_number() == row_num_reag, df_reagent$Gating.Method)) %>%
         mutate(`gating_argument` = replace(`gating_argument`, row_number() == row_num_reag, df_reagent$Gating.Argument)) %>%
-        mutate(`ug/test` = replace(`ug/test`, row_number() == row_num_reag, titration_list_all)) %>%
+        mutate(`Concentration` = replace(`Concentration`, row_number() == row_num_reag, titration_list_all)) %>%
+        # mutate(`ug/test` = replace(`ug/test`, row_number() == row_num_reag, titration_list_all)) %>%
         mutate(`Concentration (mg/ml)` = replace(`Concentration (mg/ml)`, row_number() == row_num_reag, df_reagent$Concentration..mg.ml.))
 
     metadata$`Optimal with units` <- ifelse(sapply(tibble(rep(NA, 96)), function(i) {
@@ -1142,7 +1145,8 @@ merge_metadata_for_OMIQ <- function(fcs_files,
 
         for (row in c(1:dim(metadata)[[1]])){
             # if(metadata$`Plate Column`[[row]] > 1 && is.na(metadata$`ug/test`[[row]])){
-            if(is.na(metadata$`ug/test`[[row]])){
+            # if(is.na(metadata$`ug/test`[[row]])){
+            if(is.na(metadata$`Concentration`[[row]])){
                 metadata[row,col_ind_start:col_ind_end] <- NA
             }
         }
@@ -1155,7 +1159,8 @@ merge_metadata_for_OMIQ <- function(fcs_files,
         ## for each row on the plate, if ug.test is NA, change to NA
         for (row in c(1:dim(metadata)[[1]])){
             # if(metadata$`Plate Column`[[row]] > 1 && is.na(metadata$`ug/test`[[row]])){
-            if(is.na(metadata$`ug/test`[[row]]) & metadata$`Plate Column`[[row]] > 1){
+            # if(is.na(metadata$`ug/test`[[row]]) & metadata$`Plate Column`[[row]] > 1){
+            if(is.na(metadata$`Concentration`[[row]]) & metadata$`Plate Column`[[row]] > 1){
                 metadata[row,col_ind_start:col_ind_end] <- NA
             }
         }
@@ -1167,7 +1172,8 @@ merge_metadata_for_OMIQ <- function(fcs_files,
 
         for (row in c(1:dim(metadata)[[1]])){
             # if(metadata$`Plate Column`[[row]] > 1 && is.na(metadata$`ug/test`[[row]])){
-            if(is.na(metadata$`ug/test`[[row]])){
+            # if(is.na(metadata$`ug/test`[[row]])){
+            if(is.na(metadata$`Concentration`[[row]])){
                 metadata[row,col_ind_start:col_ind_end] <- NA
             }
         }
