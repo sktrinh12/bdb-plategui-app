@@ -1299,7 +1299,7 @@ server = function(input, output, session) {
   current_time <- format(current_time, '%Y-%m-%dT%H:%M:%SZ')
   print(paste("current UTC time:", current_time))
 
-  body <- list(conf=list(EXP_ID=folder_dir, RE_RUN=""), dag_run_id=dag_run_id, execution_date=current_time)
+  body <- list(conf=list(EXP_ID=folder_dir, RE_RUN="FALSE"), dag_run_id=dag_run_id, execution_date=current_time)
   link <- paste0("http://", VM, ":8000/api/v1/dags/r_dag/dagRuns")
   res <- httr::POST(url = link,
                     config = authenticate("airflow", "airflow"),
