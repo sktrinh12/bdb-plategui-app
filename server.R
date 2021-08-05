@@ -1070,11 +1070,14 @@ server = function(input, output, session) {
   ############################################ ------------ RUN OMIQ TAB --------- #########################################
 
   has_new_dirs <- function() {
-    unique(basename(list.dirs(datadump, recursive = FALSE)))
+    ls <- unique(basename(list.dirs(datadump, recursive = FALSE)))
+    return(ls)
   }
 
   get_dirs <- function() {
-    basename(list.dirs(datadump, recursive = FALSE))
+    ls <- basename(list.dirs(datadump, recursive = FALSE))
+    print(ls)
+    return(ls)
   }
 
   current_dirs <- reactivePoll(30000, session, checkFunc = has_new_dirs, valueFunc = get_dirs)
