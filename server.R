@@ -1063,7 +1063,7 @@ server = function(input, output, session) {
                           )
     msg = paste('Data saved to:', path_exp)
     message(msg)
-    write_csv(final_metadata_outline_from_inputs(), path_exp)
+    write.csv(final_metadata_outline_from_inputs(), path_exp, row.names = FALSE)
     observe(output$data_saved_text_tab1 <- renderText(HTML(msg)))
   })
 
