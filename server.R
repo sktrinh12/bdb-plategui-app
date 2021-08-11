@@ -1070,21 +1070,18 @@ server = function(input, output, session) {
   ############################################ ------------ RUN OMIQ TAB --------- #########################################
 
   has_new_dirs <- function() {
-    ls <- unique(basename(list.dirs(datadump, recursive = FALSE)))
-    return(ls)
+    unique(basename(list.dirs(datadump, recursive = FALSE)))
   }
 
   get_dirs <- function() {
-    ls <- basename(list.dirs(datadump, recursive = FALSE))
-    print(ls)
-    return(ls)
+    basename(list.dirs(datadump, recursive = FALSE))
   }
 
-  current_dirs <- reactivePoll(30000, session, checkFunc = has_new_dirs, valueFunc = get_dirs)
+  current_dirs <- reactivePoll(10000, session, checkFunc = has_new_dirs, valueFunc = get_dirs)
 
-  observeEvent(current_dirs(), ignoreInit = T, ignoreNULL = T, {
-                 Sys.sleep(5)
-                 updateSelectInput(session, "plate_id_omiq", choices = current_dirs())
+  # observeEvent(current_dirs(), ignoreInit = T, ignoreNULL = T, {
+  observe({
+               updateSelectInput(session, "plate_id_omiq", choices = current_dirs())
   })
 
   ###################################### STEP 1: Read in metadata outline csv #########################################
